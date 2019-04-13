@@ -7,6 +7,7 @@ using GameSparks.Core;
 public class DeckBuilderCard : MonoBehaviour {
 
 	public Text AttackText, HealthText, CostText, NameText;
+    public Image cardImage;
 	public int AttackStat, HealthStat, CostStat;
 	public string NameString, RarityString;
     public Card originalCardData;
@@ -36,6 +37,7 @@ public class DeckBuilderCard : MonoBehaviour {
             HealthText.text = HealthStat.ToString();
             CostText.text = CostStat.ToString();
             NameText.text = NameString;
+            cardImage.sprite = originalCardData.artwork;
         }
 	}
 

@@ -1553,7 +1553,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d8305af9e40884382778ceffd84f84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardPrefab: {fileID: 1448529690376466, guid: 3eae2f8a8df683940aa79ee5423d9ce7, type: 3}
+  CardPrefab: {fileID: 7490596900318682279, guid: ad06bc37ec00a4749bfba6063a3dc8ab,
+    type: 3}
   CardViewerPrefab: {fileID: 8943055928202771475, guid: 8bf01fa10b12a7e498cda1192f9a34e1,
     type: 3}
 --- !u!114 &901573610
