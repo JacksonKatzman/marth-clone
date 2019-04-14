@@ -14,6 +14,9 @@ public class MainMenuCanvas : MonoBehaviour {
 	public GameObject PlayMenuDeckLayout;
 	[SerializeField] GameObject DeckEditorButtonPrefab;
 	List<GameObject> DeckEditorButtons;
+    CardLoader cardLoader;
+    DeckLoader deckLoader;
+    DeckBuilder deckBuilder;
 
 	string CurrentDeckToEdit;
 	string CurrentDeckToPlay;
@@ -21,6 +24,9 @@ public class MainMenuCanvas : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		DeckEditorButtons = new List<GameObject>();
+        cardLoader = GetComponent<CardLoader>();
+        deckLoader = GetComponent<DeckLoader>();
+        deckBuilder = GetComponent<DeckBuilder>();
 		CurrentDeckToEdit = null;
 		CurrentDeckToPlay = null;
 	}
@@ -30,27 +36,13 @@ public class MainMenuCanvas : MonoBehaviour {
 		
 	}
 
-	public void CreateDeckEditorButton(string deckName)
-	{
-		GameObject DEB = Instantiate(DeckEditorButtonPrefab);
-		DEB.transform.SetParent(DeckLayout.transform);
-		DEB.transform.GetComponentInChildren<Text>().text = deckName;
-		DEB.GetComponent<DeckSelectorButton>().mms = this;
-		DEB.GetComponent<DeckSelectorButton>().DeckName = deckName;
-		DeckEditorButtons.Add(DEB);
-		GameObject DEB2 = Instantiate(DeckEditorButtonPrefab);
-		DEB2.transform.SetParent(PlayMenuDeckLayout.transform);
-		DEB2.transform.GetComponentInChildren<Text>().text = deckName;
-		DEB2.GetComponent<DeckSelectorButton>().mms = this;
-		DEB2.GetComponent<DeckSelectorButton>().DeckName = deckName;
-		DeckEditorButtons.Add(DEB2);
-	}
 
 	public void OpenDeckBuilderMenu()
 	{
 		DeckBuilderMenu.SetActive(true);
 		MainMenuObjects.SetActive(false);
 		CurrentDeckToEdit = null;
+        deckLoader.CreateDeckButtons();
 	}
 
 	public void CloseDeckBuilderMenu()
@@ -63,7 +55,14 @@ public class MainMenuCanvas : MonoBehaviour {
 	{
 		DeckBuilder.SetActive(true);
 		DeckBuilderMenu.SetActive(false);
+        deckBuilder.ClearDeck();  
 	}
+
+    public void OpenDeckBuilderAsEditor()
+    {
+        DeckBuilder.SetActive(true);
+        DeckBuilderMenu.SetActive(false);
+    }
 
 	public void OpenPlayMenu()
 	{
@@ -90,13 +89,13 @@ public class MainMenuCanvas : MonoBehaviour {
 	{
 		DeckBuilder.SetActive(false);
 		DeckBuilderMenu.SetActive(true);
-		ClearDeckViewer();
+		//ClearDeckViewer();
 		foreach(GameObject current in DeckEditorButtons)
 		{
 			Destroy(current);
 		}
 		DeckEditorButtons.Clear();
-
+        deckLoader.CreateDeckButtons();
 	}
 
 	void ClearDeckViewer()
@@ -126,4 +125,15 @@ public class MainMenuCanvas : MonoBehaviour {
 	{
 		OpenDeckBuilder();
 	}
+
+    public void ClickEditDeck()
+    {
+        if (deckLoader.currentDeckSelected != null)
+        {
+            Debug.Log("Clicked Edit Deck and there was a deck to edit.");
+            deckLoader.currentDeckSelected.PrintContents();
+            deckBuilder.SetDeck();
+            OpenDeckBuilderAsEditor();
+        }
+    }
 }

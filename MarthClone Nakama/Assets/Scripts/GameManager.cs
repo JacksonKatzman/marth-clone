@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
 
     public Card[] cardDatabase;
+    public Dictionary<string, Deck> localDecks;
     // Start is called before the first frame update
     void Awake()
     {
@@ -40,5 +41,16 @@ public class GameManager : MonoBehaviour
         {
             return c1.cardID.CompareTo(c2.cardID);
         });
+        localDecks = new Dictionary<string, Deck>();
+    }
+
+    public void AddLocalDeck(Deck d)
+    {
+        //For now just overwrite if we have the same name
+        if(localDecks.ContainsKey(d.name))
+        {
+            localDecks.Remove(d.name);
+        }
+        localDecks.Add(d.name, d);
     }
 }

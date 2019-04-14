@@ -14,6 +14,8 @@ public class DeckBuilder : MonoBehaviour
 
     Dictionary<int, int> currentDeck;
     List<GameObject> deckDisplayPlates;
+    DeckLoader deckLoader;
+    MainMenuCanvas mms;
 
     int currentCardsInDeck = 0;
     static int MAX_NUM_ALLOWED = 2;
@@ -23,11 +25,14 @@ public class DeckBuilder : MonoBehaviour
     {
         currentDeck = new Dictionary<int, int>();
         deckDisplayPlates = new List<GameObject>();
+        deckLoader = GetComponent<DeckLoader>();
+        mms = GetComponent<MainMenuCanvas>();
     }
 
     public void ClearDeck()
     {
         currentDeck.Clear();
+        deckNameText.text = "Default Deck Name";
         ClearDeckDisplay();
     }
     
@@ -40,6 +45,19 @@ public class DeckBuilder : MonoBehaviour
         deckDisplayPlates.Clear();
         currentCardsInDeck = 0;
     }
+
+    public void SetDeck()
+    {
+        ClearDeckDisplay();
+        currentDeck = new Dictionary<int,int>(deckLoader.currentDeckSelected.deckContents);
+        deckNameText.text = deckLoader.currentDeckSelected.name;
+        Debug.Log("Set Deck For Editing. Name: " + deckLoader.currentDeckSelected.name);
+        Debug.Log("Contents:");
+        PrintContents();
+        RebuildVisibleDeckList();
+    }
+
+    
 
     public bool TryAddCard(Card c)
     {
@@ -117,5 +135,15 @@ public class DeckBuilder : MonoBehaviour
     {
         //TODO: Gotta write some code to save the currentDeck dictionary of card IDs and amounts to a database or however you want to do it.
         //You can use the name as the key or just save the name along with the ID just make sure it can pull the name as well.
+        GameManager.instance.AddLocalDeck(new Deck(deckNameText.text, currentDeck));
+        mms.CloseDeckBuilder();
+    }
+
+    void PrintContents()
+    {
+        foreach (KeyValuePair<int, int> pair in currentDeck)
+        {
+            Debug.Log("Card ID: " + pair.Key + " / Card Amount: " + pair.Value);
+        }
     }
 }
