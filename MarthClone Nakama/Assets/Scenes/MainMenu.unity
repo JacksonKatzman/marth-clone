@@ -1587,7 +1587,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ec232fe7b6621448af1dc26ba273a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deckWindow: {fileID: 266164907}
+  builderDeckWindow: {fileID: 266164907}
+  playerDeckWindow: {fileID: 1046668155}
   DeckButtonPrefab: {fileID: 1318045147039720, guid: 3687de625686b7d4bbdb83d79d0ae784,
     type: 3}
   currentDeckSelected:
@@ -1662,7 +1663,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Deck
+  m_Text: PLAY!
 --- !u!222 &927234835
 CanvasRenderer:
   m_ObjectHideFlags: 0

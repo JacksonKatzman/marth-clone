@@ -69,7 +69,8 @@ public class MainMenuCanvas : MonoBehaviour {
 		PlayMenu.SetActive(true);
 		MainMenuObjects.SetActive(false);
 		CurrentDeckToEdit = null;
-	}
+        deckLoader.CreateDeckButtons();
+    }
 
 	public void ClosePlayMenu()
 	{
@@ -79,10 +80,7 @@ public class MainMenuCanvas : MonoBehaviour {
 
 	public void BeginPlayGame()
 	{
-		if(CurrentDeckToEdit != null)
-		{
-			
-		}
+
 	}
 
 	public void CloseDeckBuilder()
