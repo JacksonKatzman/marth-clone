@@ -19,5 +19,7 @@ public class Card : ScriptableObject
     public CardType cardType;
     //public bool[] staticKeyWords = new bool[(int)StaticKeyWord.NUM_TYPES];
     public bool Taunt, Charge, Lifesteal, Rush, Divine_Shield;
-    
+
+    [Header("Card Effects")]
+    public List<CardEffect> battlecries;
 }
