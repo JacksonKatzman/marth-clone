@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Test 2
   description: This is a sample description.
-  artwork: {fileID: 21300000, guid: df5b3e6904a86e5448aebc83c1554786, type: 3}
+  artwork: {fileID: 21300000, guid: df45a8370f23da342bf9b41ba4ca7d7c, type: 3}
   manaCost: 2
   attack: 2
   health: 3
