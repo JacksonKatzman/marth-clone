@@ -8,7 +8,6 @@ public class Authentication_Handler : MonoBehaviour {
 
 	public Text userNameInput, passwordInput, displayNameInput;
 	public GameObject newAccountButton, logInButton, registerButton, backButton;
-	[SerializeField] GameSparksManager GSM;
 
 	public void NewAccountButton()
 	{
