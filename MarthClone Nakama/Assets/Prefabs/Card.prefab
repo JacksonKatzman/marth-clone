@@ -254,6 +254,7 @@ MonoBehaviour:
   HealthText: {fileID: 114774209807052226}
   CostText: {fileID: 114868263104216226}
   NameText: {fileID: 114385547337773706}
+  cardImage: {fileID: 0}
   AttackStat: 0
   HealthStat: 0
   CostStat: 0
@@ -403,7 +404,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 8.641001}
   m_AnchorMin: {x: 0.88817674, y: 0.10833334}
-  m_AnchorMax: {x: 0.88817674, y: 0.10833334}
+  m_AnchorMax: {x: 0.88817674, y: 1}
   m_AnchoredPosition: {x: -61.652, y: 88.25}
   m_SizeDelta: {x: 118.81, y: 20.07}
   m_Pivot: {x: 0.5, y: 0.5}
