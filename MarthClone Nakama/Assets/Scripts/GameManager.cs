@@ -53,4 +53,9 @@ public class GameManager : MonoBehaviour
         }
         localDecks.Add(d.name, d);
     }
+
+    void LoadDecks()
+    {
+
+    }
 }
