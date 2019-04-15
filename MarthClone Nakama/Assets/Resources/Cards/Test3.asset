@@ -26,3 +26,5 @@ MonoBehaviour:
   Lifesteal: 0
   Rush: 0
   Divine_Shield: 0
+  battlecries:
+  - {fileID: 11400000, guid: 2104ef92afcec6546a4e46f05bf4ae2b, type: 2}

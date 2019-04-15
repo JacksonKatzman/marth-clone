@@ -17,6 +17,7 @@ public class Card : ScriptableObject
     [Header("Card Attributes")]
     public CardClassification cardClass;
     public CardType cardType;
+    public CardRarity cardRarity;
     //public bool[] staticKeyWords = new bool[(int)StaticKeyWord.NUM_TYPES];
     public bool Taunt, Charge, Lifesteal, Rush, Divine_Shield;
 

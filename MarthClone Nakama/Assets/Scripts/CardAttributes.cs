@@ -10,6 +10,8 @@ namespace CardInfo
     [Serializable]
     public enum CardClassification {Beast, Mech, Dragon, All, NUM_TYPES};
     [Serializable]
+    public enum CardRarity { Common, Rare, Epic, Legendary, None, NUM_TYPES };
+    [Serializable]
     public enum CardType {Minion, Spell, NUM_TYPES};
     [Serializable]
     public class CardEffect : ScriptableObject
