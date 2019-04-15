@@ -3,12 +3,67 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using CardInfo;
 
 public class PlayableCard : MonoBehaviour
 {
     public Card baseCard;
     public TextMeshPro cardName;
-    public TextMeshPro manaCostText;
+    public SpriteRenderer cardArt;
+    public TextMeshPro manaCostText, descriptionText;
     public SpriteRenderer raritySprite;
     protected int manacost;
+
+
+    public virtual void SetToBaseCard()
+    {
+
+    }
+
+    public string ConvertCardNameForDisplay()
+    {
+        if (baseCard.name.Length < 13)
+        {
+            int count = 13 - baseCard.name.Length;
+            int front = count / 2;
+            int back = front + count % 2;
+            string temp = "";
+            for (int a = 0; a < front; a++)
+            {
+                temp += "$";
+            }
+            temp += baseCard.name;
+            for (int a = 0; a < back; a++)
+            {
+                temp += "$";
+            }
+            return temp;
+        }
+        else
+        {
+            return baseCard.name;
+        }
+    }
+
+    public Sprite GetRaritySprite()
+    {
+        Sprite toRet = null;
+        if (baseCard.cardRarity == CardRarity.Common)
+        {
+            toRet = (Sprite)Resources.Load<Sprite>("Rarity_Common");
+        }
+        if (baseCard.cardRarity == CardRarity.Rare)
+        {
+            toRet = (Sprite)Resources.Load<Sprite>("Rarity_Rare");
+        }
+        if (baseCard.cardRarity == CardRarity.Epic)
+        {
+            toRet = (Sprite)Resources.Load<Sprite>("Rarity_Epic");
+        }
+        if (baseCard.cardRarity == CardRarity.Legendary)
+        {
+            toRet = (Sprite)Resources.Load<Sprite>("Rarity_Legendary");
+        }
+        return toRet;
+    }
 }
