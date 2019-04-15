@@ -10,6 +10,7 @@ public class NakamaTest : MonoBehaviour
     private IClient _client = new Client("defaultkey", "18.224.212.203", 7350, false);
     private ISession _session;
     private ISocket _socket;
+    IMatch myMatch;
 
     private async void Awake()
     {
@@ -52,11 +53,43 @@ public class NakamaTest : MonoBehaviour
 
         var matchmakerTicket = await _socket.AddMatchmakerAsync(
             query, minCount, maxCount);
-        _socket.OnMatchmakerMatched += (_, matched) =>
+        _socket.OnMatchmakerMatched += async (_, matched) =>
         {
             Debug.LogFormat("Received MatchmakerMatched message: {0}", matched);
             var opponents = string.Join(",", matched.Users); // printable list.
             Debug.LogFormat("Matched opponents: {0}", opponents);
+            
+            myMatch = await _socket.JoinMatchAsync(matched);
+            CreateMessageListener();
+        };
+    }
+
+    public void AttemptSendMessage()
+    {
+        if (myMatch != null)
+        {
+            _socket.SendMatchState(myMatch.Id, 1, "Hello!");
+            Debug.Log("Msg Sent.");
+        }
+        else
+        {
+            Debug.Log("No Match.");
+        }
+    }
+
+    void CreateMessageListener()
+    {
+        _socket.OnMatchState += (_, state) => {
+            var content = System.Text.Encoding.UTF8.GetString(state.State);
+            switch (state.OpCode)
+            {
+                case 101:
+                    Debug.Log("A custom opcode.");
+                    break;
+                default:
+                    Debug.LogFormat("User {0} sent {1}", state.UserPresence.Username, content);
+                    break;
+            }
         };
     }
 }
