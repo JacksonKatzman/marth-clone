@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Nakama;
+using System;
 
 public class NakamaTest : MonoBehaviour
 {
@@ -15,10 +16,13 @@ public class NakamaTest : MonoBehaviour
     private async void Awake()
     {
         Debug.Log("NakamaTest: Awake");
-        var authtoken = PlayerPrefs.GetString(PrefKeyName);
+        var authtoken = ""; // PlayerPrefs.GetString(PrefKeyName);
+        Debug.Log("PlayerPrefsGetString: " + authtoken);
         if (!string.IsNullOrEmpty(authtoken))
         {
+            //Debug.Log("Auth token was not null or open!");
             var session = Session.Restore(authtoken);
+            //Debug.Log(new DateTime(session.ExpireTime));
             if (!session.IsExpired)
             {
                 _session = session;
@@ -29,7 +33,7 @@ public class NakamaTest : MonoBehaviour
         }
         var deviceid = SystemInfo.deviceUniqueIdentifier;
         _session = await _client.AuthenticateDeviceAsync(deviceid);
-        PlayerPrefs.SetString(PrefKeyName, _session.AuthToken);
+        //PlayerPrefs.SetString(PrefKeyName, _session.AuthToken);
         _socket = _client.CreateWebSocket();
         _socket.OnConnect += (sender, args) =>
         {
@@ -41,6 +45,7 @@ public class NakamaTest : MonoBehaviour
         };
         await _socket.ConnectAsync(_session);
         Debug.Log(_session);
+        Debug.Log(new DateTime(_session.ExpireTime));
     }
 
     public async void AttemptMatchmake()
@@ -60,6 +65,14 @@ public class NakamaTest : MonoBehaviour
             Debug.LogFormat("Matched opponents: {0}", opponents);
             
             myMatch = await _socket.JoinMatchAsync(matched);
+            if(myMatch != null)
+            {
+                Debug.Log("Match ID: " + myMatch.Id);
+            }
+            else
+            {
+                Debug.Log("NO MATCH!");
+            }
             CreateMessageListener();
         };
     }

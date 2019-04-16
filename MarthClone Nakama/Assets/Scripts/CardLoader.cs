@@ -37,7 +37,7 @@ public class CardLoader : MonoBehaviour
         Debug.Log("Sorted Cards Length: " + sortedCards.Count);
         cardViewers = new List<GameObject>();
 
-        int numViewers = sortedCards.Count / 8;
+        int numViewers = sortedCards.Count / 6;
         if (sortedCards.Count%8 != 0)
         {
             ++numViewers;
@@ -46,14 +46,14 @@ public class CardLoader : MonoBehaviour
         for(int a = 0; a < numViewers; a++)
         {
             GameObject viewer = Instantiate(CardViewerPrefab, mmc.DeckBuilder.transform);
-            for(int b = 0; b < 8; b++)
+            for(int b = 0; b < 6; b++)
             {
-                if ((a * 8) + b < sortedCards.Count)
+                if ((a * 6) + b < sortedCards.Count)
                 {
                     GameObject card = Instantiate(CardPrefab, viewer.transform);
                     DeckBuilderCard cardScript = card.GetComponent<DeckBuilderCard>();
                     //cardScript.originalCardData = sortedCards[(a * 8) + b];
-                    cardScript.BuildCard(sortedCards[(a * 8) + b], deckBuilder);
+                    cardScript.BuildCard(sortedCards[(a * 6) + b], deckBuilder);
                 }
             }
             cardViewers.Add(viewer);

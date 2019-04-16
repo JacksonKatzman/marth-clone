@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 88742885525c93d4bb19a39ecefd2b79
+  - enabled: 1
+    path: Assets/Scenes/NakamaTest.unity
+    guid: b17c1c1285e7fdb4ebdb52bb93c09ef5
   m_configObjects: {}
