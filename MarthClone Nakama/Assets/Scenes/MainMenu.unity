@@ -1572,7 +1572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deckWindow: {fileID: 1641673813}
-  deckNameText: {fileID: 1793558991}
+  deckNameText: {fileID: 945850582}
   cardCount: {fileID: 701886307}
   cardPlatePrefab: {fileID: 7985765624403129191, guid: acb456c925903784aad6dc1961520b70,
     type: 3}

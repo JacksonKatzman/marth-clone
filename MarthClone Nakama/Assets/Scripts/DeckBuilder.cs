@@ -8,7 +8,7 @@ using System.Linq;
 public class DeckBuilder : MonoBehaviour
 {
     [SerializeField] GameObject deckWindow;
-    [SerializeField] Text deckNameText;
+    [SerializeField] InputField deckNameText;
     [SerializeField] Text cardCount;
     [SerializeField] GameObject cardPlatePrefab;
 
