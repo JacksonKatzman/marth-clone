@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 //using Facebook.Unity;
 using System.Linq;
 using DemoGame.Scripts.Utils;
+using DemoGame.Scripts.Matchmaking;
 using UnityEngine.SceneManagement;
 
 namespace DemoGame.Scripts.Session
@@ -81,6 +82,10 @@ namespace DemoGame.Scripts.Session
         /// Sufix added to <see cref="_deviceId"/> to generate new device id.
         /// </summary>
         [SerializeField] private string _sufix = string.Empty;
+        /// <summary>
+        /// Mathmaker ticker used to leave queue or join match.
+        /// </summary>
+        private IMatchmakerTicket ticket;
 
         #endregion
 
@@ -552,6 +557,119 @@ namespace DemoGame.Scripts.Session
         }
 
         #endregion
+
+        /// <summary>
+        /// Joins matchmaker queue.
+        /// </summary>
+        /// <remarks>
+        /// Nakama allows for joining multiple matchmakers, however for the purposes of this demo,
+        /// we will allow only for joining a single matchmaking queue.
+        /// </remarks>
+        private async Task<bool> StartMatchmakerAsync()
+        {
+            if (ticket != null)
+            {
+                Debug.Log("Matchmaker already started");
+                return false;
+            }
+
+            ISocket socket = NakamaSessionManager.Instance.Socket;
+
+            // Create params object with default values
+            MatchmakingParams param = new MatchmakingParams();
+
+            socket.OnMatchmakerMatched += OnMatchmakerMatched;
+            // Join the matchmaker
+            ticket = await MatchmakingManager.EnterQueueAsync(socket, param);
+            if (ticket == null)
+            {
+                Debug.Log("Couldn't start matchmaker" + Environment.NewLine + "Try again later");
+                socket.OnMatchmakerMatched -= OnMatchmakerMatched;
+                return false;
+            }
+            else
+            {
+                // Matchmaker queue joined
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Invoked whenever matchmaker finds an opponent.
+        /// </summary>
+        private void OnMatchmakerMatched(object sender, IMatchmakerMatched e)
+        {
+            /*
+            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                ISocket socket = NakamaSessionManager.Instance.Socket;
+                socket.OnMatchmakerMatched -= OnMatchmakerMatched;
+
+                StartCoroutine(LoadBattle(e));
+            });
+            */
+        }
+
+        /// <summary>
+        /// Leaves matchmaker queue.
+        /// </summary>
+        private async Task<bool> StopMatchmakerAsync(IMatchmakerTicket ticket)
+        {
+            if (ticket == null)
+            {
+                Debug.Log("Couldn't stop matchmaker; matchmaking hasn't been started yet");
+                return false;
+            }
+            ISocket socket = NakamaSessionManager.Instance.Socket;
+            bool good = await MatchmakingManager.LeaveQueueAsync(socket, ticket);
+
+            this.ticket = null;
+            socket.OnMatchmakerMatched -= OnMatchmakerMatched;
+            return good;
+        }
+        public async void StartMachmaker()
+        {
+            bool joined = await StartMatchmakerAsync();
+            if(joined)
+            {
+                Debug.Log("Matchmaking started successfully.");
+            }
+            else
+            {
+                Debug.Log("Error beginning matchmaking.");
+            }
+        }
+        public async void StopMatchmaker()
+        {
+            bool left = await StopMatchmakerAsync(ticket);
+            if (left)
+            {
+                Debug.Log("Matchmaking stopped successfully.");
+            }
+            else
+            {
+                Debug.Log("Error stopping matchmaking.");
+            }
+        }
+
+        /// <summary>
+        /// Starts the game scene and joins the match
+        /// </summary>
+        /// 
+        /*
+        private IEnumerator LoadBattle(IMatchmakerMatched matched)
+        {
+            AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("PlayingField", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
+
+            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("MainMenu");
+            MatchCommunicationManager.Instance.JoinMatchAsync(matched);
+        }
+        */
         /*
         #region Facebook
 

@@ -13,6 +13,7 @@ public class MainMenuCanvas : MonoBehaviour {
 	public GameObject DeckLayout;
 	public GameObject PlayMenuDeckLayout;
     public GameObject PlayButton;
+    public GameObject MatchSearchOverlay;
 	[SerializeField] GameObject DeckEditorButtonPrefab;
 	List<GameObject> DeckEditorButtons;
     CardLoader cardLoader;
@@ -82,8 +83,15 @@ public class MainMenuCanvas : MonoBehaviour {
 
 	public void BeginPlayGame()
 	{
+        MatchSearchOverlay.SetActive(true);
         GameManager.instance.PlayButtonPressed(deckLoader.currentDeckSelected);
 	}
+
+    public void CancelPlayGame()
+    {
+        GameManager.instance.CancelMatchmaking();
+        MatchSearchOverlay.SetActive(false);
+    }
 
 	public void CloseDeckBuilder()
 	{

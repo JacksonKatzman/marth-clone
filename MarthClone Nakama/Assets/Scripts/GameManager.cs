@@ -101,7 +101,18 @@ public class GameManager : MonoBehaviour
     {
         //Will do matchmaking here eventually
         currentDeck = deck;
-        SceneManager.LoadScene("PlayingField");
+        StartMatchMaking();
+        //SceneManager.LoadScene("PlayingField");
+    }
+
+    void StartMatchMaking()
+    {
+        NakamaSessionManager.Instance.StartMachmaker();
+    }
+
+    public void CancelMatchmaking()
+    {
+        NakamaSessionManager.Instance.StopMatchmaker();
     }
 
     public async void AttemptConnect()
