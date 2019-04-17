@@ -36,7 +36,9 @@ public class DeckLoader : MonoBehaviour
             if (forEditor)
                 mms.ClickEditDeck();
             else
+            {
                 HighlightSelected(deckName);
+            }
             //currentDeckSelected.PrintContents();
         }
     }
@@ -73,6 +75,10 @@ public class DeckLoader : MonoBehaviour
             {
                 gObj.GetComponent<Image>().color = Color.white;
             }
+        }
+        if(currentDeckSelected != null)
+        {
+            mms.ShowPlayButton(true);
         }
     }
 

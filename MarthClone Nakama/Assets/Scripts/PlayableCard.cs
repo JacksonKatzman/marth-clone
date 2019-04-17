@@ -13,11 +13,19 @@ public class PlayableCard : MonoBehaviour
     public TextMeshPro manaCostText, descriptionText;
     public SpriteRenderer raritySprite;
     protected int manacost;
-
+    
 
     public virtual void SetToBaseCard()
     {
 
+    }
+
+    public virtual void OnCardPlayed()
+    {
+        foreach(CardEffect effect in baseCard.battlecries)
+        {
+            effect.Trigger();
+        }
     }
 
     public string ConvertCardNameForDisplay()

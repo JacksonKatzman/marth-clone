@@ -27,7 +27,7 @@ public class PlayingFieldOrganizer : MonoBehaviour
             return;
         if(numCards == 1)
         {
-            cards[0].transform.position = Vector3.zero;
+            cards[0].transform.localPosition = Vector3.zero;
             return;
         }
         float startPos = 0;
@@ -41,7 +41,8 @@ public class PlayingFieldOrganizer : MonoBehaviour
             Vector3 v = new Vector3(startPos, 0, 0);
             Debug.Log("Should be setting card " + a + " to: " + v.ToString());
             //cards[a].gameObject.transform.localPosition.Set(startPos, 0, 0);
-            cards[a].transform.position = v;
+            //cards[a].transform.localPosition = v;
+            cards[a].GetComponent<CardDragger>().BeginLerp(cards[a].transform.localPosition, v);
             startPos += 4;
         }
     }
@@ -63,11 +64,13 @@ public class PlayingFieldOrganizer : MonoBehaviour
         if(cards.Count == 0)
         {
             cards.Add(card);
+            OrganizeCards();
             return;
         }
         if(pos.x < cards[0].transform.position.x)
         {
             cards.Insert(0, card);
+            OrganizeCards();
             return;
         }
         for(int a = 0; a < cards.Count - 1; a++)
@@ -75,6 +78,7 @@ public class PlayingFieldOrganizer : MonoBehaviour
             if(pos.x > cards[a].transform.position.x && pos.x < cards[a+1].transform.position.x)
             {
                 cards.Insert(a + 1, card);
+                OrganizeCards();
                 return;
             }
         }

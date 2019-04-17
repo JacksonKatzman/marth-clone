@@ -27,6 +27,11 @@ namespace TMPro.Examples
             StartCoroutine(WarpText());
         }
 
+        public void RestartSkew()
+        {
+            CurveScale /= 10;
+            StartCoroutine(WarpText());
+        }
 
         private AnimationCurve CopyAnimationCurve(AnimationCurve curve)
         {

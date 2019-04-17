@@ -35,7 +35,15 @@ public class PlayableMinion : PlayableCard
         descriptionText.text = baseCard.description;
         cardName.text = ConvertCardNameForDisplay();
         raritySprite.sprite = GetRaritySprite();
+        if(classText.text == "None")
+        {
+            classText.text = "";
+        }
     }
 
-    
+    public override void OnCardPlayed()
+    {
+        base.OnCardPlayed();
+    }
+
 }

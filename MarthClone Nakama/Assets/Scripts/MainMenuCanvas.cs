@@ -12,6 +12,7 @@ public class MainMenuCanvas : MonoBehaviour {
 	public GameObject MainMenuObjects;
 	public GameObject DeckLayout;
 	public GameObject PlayMenuDeckLayout;
+    public GameObject PlayButton;
 	[SerializeField] GameObject DeckEditorButtonPrefab;
 	List<GameObject> DeckEditorButtons;
     CardLoader cardLoader;
@@ -70,6 +71,7 @@ public class MainMenuCanvas : MonoBehaviour {
 		MainMenuObjects.SetActive(false);
 		CurrentDeckToEdit = null;
         deckLoader.CreateDeckButtons();
+        ShowPlayButton(false);
     }
 
 	public void ClosePlayMenu()
@@ -80,7 +82,7 @@ public class MainMenuCanvas : MonoBehaviour {
 
 	public void BeginPlayGame()
 	{
-
+        GameManager.instance.PlayButtonPressed(deckLoader.currentDeckSelected);
 	}
 
 	public void CloseDeckBuilder()
@@ -133,5 +135,10 @@ public class MainMenuCanvas : MonoBehaviour {
             deckBuilder.SetDeck();
             OpenDeckBuilderAsEditor();
         }
+    }
+
+    public void ShowPlayButton(bool show)
+    {
+        PlayButton.SetActive(show);
     }
 }

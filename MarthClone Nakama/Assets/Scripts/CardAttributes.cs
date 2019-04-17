@@ -8,7 +8,7 @@ namespace CardInfo
     //[Serializable]
     //public enum StaticKeyWord {Taunt, Lifesteal, Charge, Rush, Divine_Shield, NUM_TYPES};
     [Serializable]
-    public enum CardClassification {Beast, Mech, Dragon, All, NUM_TYPES};
+    public enum CardClassification {None, Beast, Mech, Dragon, All, NUM_TYPES};
     [Serializable]
     public enum CardRarity { Common, Rare, Epic, Legendary, None, NUM_TYPES };
     [Serializable]
@@ -29,6 +29,10 @@ namespace CardInfo
         public override void Trigger()
         {
             //Draw cards
+            for(int a = 0; a < amount; a++)
+            {
+                GameManager.instance.playHandler.DrawCard();
+            }
         }
     }
 }

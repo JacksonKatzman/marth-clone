@@ -19,4 +19,9 @@ public class PlayableSpell : PlayableCard
         cardName.text = ConvertCardNameForDisplay();
         raritySprite.sprite = GetRaritySprite();
     }
+
+    public override void OnCardPlayed()
+    {
+        base.OnCardPlayed();
+    }
 }

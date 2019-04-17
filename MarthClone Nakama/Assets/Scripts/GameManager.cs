@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public Card[] cardDatabase;
     public Dictionary<string, Deck> localDecks;
+    public Deck currentDeck;
+    public PlayHandler playHandler;
     // Start is called before the first frame update
     void Awake()
     {
@@ -57,5 +60,12 @@ public class GameManager : MonoBehaviour
     void LoadDecks()
     {
 
+    }
+
+    public void PlayButtonPressed(Deck deck)
+    {
+        //Will do matchmaking here eventually
+        currentDeck = deck;
+        SceneManager.LoadScene("PlayingField");
     }
 }
