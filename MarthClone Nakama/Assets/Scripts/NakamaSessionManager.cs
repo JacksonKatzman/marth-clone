@@ -23,6 +23,8 @@ using System.Linq;
 using DemoGame.Scripts.Utils;
 using DemoGame.Scripts.Matchmaking;
 using UnityEngine.SceneManagement;
+using DemoGame.Scripts.Gameplay.NetworkCommunication;
+using System.Collections;
 
 namespace DemoGame.Scripts.Session
 {
@@ -599,7 +601,7 @@ namespace DemoGame.Scripts.Session
         /// </summary>
         private void OnMatchmakerMatched(object sender, IMatchmakerMatched e)
         {
-            /*
+            
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 ISocket socket = NakamaSessionManager.Instance.Socket;
@@ -607,7 +609,7 @@ namespace DemoGame.Scripts.Session
 
                 StartCoroutine(LoadBattle(e));
             });
-            */
+            
         }
 
         /// <summary>
@@ -656,7 +658,7 @@ namespace DemoGame.Scripts.Session
         /// Starts the game scene and joins the match
         /// </summary>
         /// 
-        /*
+        
         private IEnumerator LoadBattle(IMatchmakerMatched matched)
         {
             AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("PlayingField", UnityEngine.SceneManagement.LoadSceneMode.Additive);
@@ -669,7 +671,7 @@ namespace DemoGame.Scripts.Session
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("MainMenu");
             MatchCommunicationManager.Instance.JoinMatchAsync(matched);
         }
-        */
+        
         /*
         #region Facebook
 
