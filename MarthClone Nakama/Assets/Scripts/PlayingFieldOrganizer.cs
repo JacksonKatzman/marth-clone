@@ -64,6 +64,7 @@ public class PlayingFieldOrganizer : MonoBehaviour
     public void RemoveCard(PlayableCard card)
     {
         cards.Remove(card);
+        OrganizeCards();
     }
 
     public void AddCard(PlayableCard card, int absPos)
