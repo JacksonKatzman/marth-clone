@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CardInfo;
 
 public class PlayHandler : MonoBehaviour
 {
-    public HandOrganizer myHandOrganizer;
-    public PlayingFieldOrganizer myPlayingFieldOrganizer;
+    public HandOrganizer myHandOrganizer, opponentHandOrganizer;
+    public PlayingFieldOrganizer myPlayingFieldOrganizer, opponentFieldOrganizer;
     public List<PlayableCard> playableDeck;
     public DeckManager deckManager;
 
@@ -57,6 +58,16 @@ public class PlayHandler : MonoBehaviour
     public void EndTurn()
     {
 
+    }
+
+    public void OpponentPlayedCard(int cardID, int cardType, int absPos)
+    {
+        //for later, check for real cards
+        if((CardInfo.CardType)cardType == CardInfo.CardType.Minion)
+        {
+            PlayableMinion minion = new PlayableMinion(GameManager.instance.cardDatabase[cardID]);
+            opponentFieldOrganizer.AddCard(minion, absPos);
+        }
     }
 
 }

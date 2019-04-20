@@ -321,6 +321,11 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
                     //OnTurnEnded?.Invoke(matchMessageTurnEnded);
                     GameManager.instance.StartTurn();
                     break;
+                case MatchMessageType.CardPlayed:
+                    MatchMessageCardPlayed cardPlayed = MatchMessageCardPlayed.Parse(messageJson);
+                    //OnTurnEnded?.Invoke(matchMessageTurnEnded);
+                    GameManager.instance.playHandler.OpponentPlayedCard(cardPlayed.cardID, cardPlayed.cardType, cardPlayed.absPos);
+                    break;
                     /*
                                     //UNITS
                                     case MatchMessageType.UnitSpawned:

@@ -81,6 +81,7 @@ public class PlayableMinion : PlayableCard
 
     public void HandleDying()
     {
+        GameManager.instance.playHandler.myPlayingFieldOrganizer.RemoveCard(this);
         Destroy(this.gameObject);
     }
 

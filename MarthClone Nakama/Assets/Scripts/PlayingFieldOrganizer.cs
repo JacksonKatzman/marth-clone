@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DemoGame.Scripts.Gameplay.NetworkCommunication;
+using DemoGame.Scripts.Gameplay.NetworkCommunication.MatchStates;
 
 public class PlayingFieldOrganizer : MonoBehaviour
 {
@@ -59,18 +61,36 @@ public class PlayingFieldOrganizer : MonoBehaviour
         }
     }
 
+    public void RemoveCard(PlayableCard card)
+    {
+        cards.Remove(card);
+    }
+
+    public void AddCard(PlayableCard card, int absPos)
+    {
+        cards.Insert(absPos, card);
+        OrganizeCards();
+
+    }
+
     void AddCard(PlayableCard card, Vector3 pos)
     {
-        if(cards.Count == 0)
+        int absPos = 0;
+        MatchMessageCardPlayed cardPlayed;
+        if (cards.Count == 0)
         {
             cards.Add(card);
             OrganizeCards();
+            cardPlayed = new MatchMessageCardPlayed(card.baseCard.cardID, (int)card.baseCard.cardType, absPos);
+            MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayed, cardPlayed);
             return;
         }
         if(pos.x < cards[0].transform.position.x)
         {
             cards.Insert(0, card);
             OrganizeCards();
+            cardPlayed = new MatchMessageCardPlayed(card.baseCard.cardID, (int)card.baseCard.cardType, absPos);
+            MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayed, cardPlayed);
             return;
         }
         for(int a = 0; a < cards.Count - 1; a++)
@@ -79,10 +99,16 @@ public class PlayingFieldOrganizer : MonoBehaviour
             {
                 cards.Insert(a + 1, card);
                 OrganizeCards();
+                absPos = a + 1;
+                cardPlayed = new MatchMessageCardPlayed(card.baseCard.cardID, (int)card.baseCard.cardType, absPos);
+                MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayed, cardPlayed);
                 return;
             }
         }
         cards.Add(card);
+        absPos = cards.Count-1;
+        cardPlayed = new MatchMessageCardPlayed(card.baseCard.cardID, (int)card.baseCard.cardType, absPos);
+        MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayed, cardPlayed);
         OrganizeCards();
     }
 
