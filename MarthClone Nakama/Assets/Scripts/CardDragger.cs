@@ -137,6 +137,6 @@ public class CardDragger : MonoBehaviour
         card.RecieveAttack(me);
         me.RecieveAttack(card);
         MatchMessageHandleCombat combat = new MatchMessageHandleCombat(me.networkID, card.networkID);
-        MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayed, combat);
+        MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitAttacked, combat);
     }
 }
