@@ -68,9 +68,10 @@ public class PlayingFieldOrganizer : MonoBehaviour
 
     public void AddCard(PlayableCard card, int absPos)
     {
+        Debug.Log("Attempting to add card to opponents board.");
+        card.gameObject.transform.parent = transform;
         cards.Insert(absPos, card);
         OrganizeCards();
-
     }
 
     void AddCard(PlayableCard card, Vector3 pos)

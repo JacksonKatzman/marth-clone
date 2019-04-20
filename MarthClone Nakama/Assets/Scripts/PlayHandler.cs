@@ -65,7 +65,11 @@ public class PlayHandler : MonoBehaviour
         //for later, check for real cards
         if((CardInfo.CardType)cardType == CardInfo.CardType.Minion)
         {
-            PlayableMinion minion = new PlayableMinion(GameManager.instance.cardDatabase[cardID]);
+            //PlayableMinion minion = new PlayableMinion(GameManager.instance.cardDatabase[cardID]);
+            GameObject playableMinion = Instantiate(PlayableMinionPrefab);
+            PlayableMinion minion = playableMinion.GetComponent<PlayableMinion>();
+            minion.baseCard = GameManager.instance.cardDatabase[cardID];
+            minion.SetToBaseCard();
             opponentFieldOrganizer.AddCard(minion, absPos);
         }
     }
