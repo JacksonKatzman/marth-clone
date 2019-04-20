@@ -324,7 +324,12 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
                 case MatchMessageType.CardPlayed:
                     MatchMessageCardPlayed cardPlayed = MatchMessageCardPlayed.Parse(messageJson);
                     //OnTurnEnded?.Invoke(matchMessageTurnEnded);
-                    GameManager.instance.playHandler.OpponentPlayedCard(cardPlayed.cardID, cardPlayed.cardType, cardPlayed.absPos);
+                    GameManager.instance.playHandler.OpponentPlayedCard(cardPlayed.cardID, cardPlayed.cardType, cardPlayed.absPos, cardPlayed.netID);
+                    break;
+                case MatchMessageType.UnitAttacked:
+                    MatchMessageHandleCombat combat = MatchMessageHandleCombat.Parse(messageJson);
+                    //OnTurnEnded?.Invoke(matchMessageTurnEnded);
+                    GameManager.instance.playHandler.HandleIncomingCombat(combat.myNetID, combat.enemyNetID);
                     break;
                     /*
                                     //UNITS

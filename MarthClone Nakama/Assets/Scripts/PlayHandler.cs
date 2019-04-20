@@ -60,7 +60,7 @@ public class PlayHandler : MonoBehaviour
 
     }
 
-    public void OpponentPlayedCard(int cardID, int cardType, int absPos)
+    public void OpponentPlayedCard(int cardID, int cardType, int absPos, int netID)
     {
         //for later, check for real cards
         if((CardInfo.CardType)cardType == CardInfo.CardType.Minion)
@@ -68,9 +68,37 @@ public class PlayHandler : MonoBehaviour
             //PlayableMinion minion = new PlayableMinion(GameManager.instance.cardDatabase[cardID]);
             GameObject playableMinion = Instantiate(PlayableMinionPrefab);
             PlayableMinion minion = playableMinion.GetComponent<PlayableMinion>();
+            minion.networkID = netID;
             minion.baseCard = GameManager.instance.cardDatabase[cardID];
             minion.SetToBaseCard();
             opponentFieldOrganizer.AddCard(minion, absPos);
+        }
+    }
+
+    public void HandleIncomingCombat(int theirID, int myID)
+    {
+        PlayableMinion myCard = null;
+        PlayableMinion theirCard = null;
+        foreach(PlayableCard c in myPlayingFieldOrganizer.cards)
+        {
+            if(c.networkID == myID)
+            {
+                myCard = (PlayableMinion)c;
+                continue;
+            }
+        }
+        foreach (PlayableCard c in opponentFieldOrganizer.cards)
+        {
+            if (c.networkID == theirID)
+            {
+                theirCard = (PlayableMinion)c;
+                continue;
+            }
+        }
+        if(myCard != null && theirCard != null)
+        {
+            myCard.RecieveAttack(theirCard);
+            theirCard.RecieveAttack(myCard);
         }
     }
 

@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public Deck currentDeck;
     public PlayHandler playHandler;
     public MatchUI matchUI;
+    public int currentNextID = 0;
 
     bool myTurn = true;
     // Start is called before the first frame update

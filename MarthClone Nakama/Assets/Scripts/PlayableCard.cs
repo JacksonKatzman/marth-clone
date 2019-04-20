@@ -13,6 +13,7 @@ public class PlayableCard : MonoBehaviour
     public SpriteRenderer cardArt;
     public TextMeshPro manaCostText, descriptionText;
     public SpriteRenderer raritySprite;
+    public int networkID;
     protected int manacost;
     
 

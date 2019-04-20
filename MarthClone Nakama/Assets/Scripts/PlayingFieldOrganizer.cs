@@ -69,6 +69,7 @@ public class PlayingFieldOrganizer : MonoBehaviour
     public void AddCard(PlayableCard card, int absPos)
     {
         Debug.Log("Attempting to add card to opponents board.");
+        GameManager.instance.currentNextID++;
         card.gameObject.transform.parent = transform;
         cards.Insert(absPos, card);
         OrganizeCards();
@@ -76,13 +77,16 @@ public class PlayingFieldOrganizer : MonoBehaviour
 
     void AddCard(PlayableCard card, Vector3 pos)
     {
+        int cardNetID = GameManager.instance.currentNextID;
+        card.networkID = cardNetID;
+        GameManager.instance.currentNextID++;
         int absPos = 0;
         MatchMessageCardPlayed cardPlayed;
         if (cards.Count == 0)
         {
             cards.Add(card);
             OrganizeCards();
-            cardPlayed = new MatchMessageCardPlayed(card.baseCard.cardID, (int)card.baseCard.cardType, absPos);
+            cardPlayed = new MatchMessageCardPlayed(card.baseCard.cardID, (int)card.baseCard.cardType, absPos, cardNetID);
             MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayed, cardPlayed);
             return;
         }
@@ -90,7 +94,7 @@ public class PlayingFieldOrganizer : MonoBehaviour
         {
             cards.Insert(0, card);
             OrganizeCards();
-            cardPlayed = new MatchMessageCardPlayed(card.baseCard.cardID, (int)card.baseCard.cardType, absPos);
+            cardPlayed = new MatchMessageCardPlayed(card.baseCard.cardID, (int)card.baseCard.cardType, absPos, cardNetID);
             MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayed, cardPlayed);
             return;
         }
@@ -101,14 +105,14 @@ public class PlayingFieldOrganizer : MonoBehaviour
                 cards.Insert(a + 1, card);
                 OrganizeCards();
                 absPos = a + 1;
-                cardPlayed = new MatchMessageCardPlayed(card.baseCard.cardID, (int)card.baseCard.cardType, absPos);
+                cardPlayed = new MatchMessageCardPlayed(card.baseCard.cardID, (int)card.baseCard.cardType, absPos, cardNetID);
                 MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayed, cardPlayed);
                 return;
             }
         }
         cards.Add(card);
         absPos = cards.Count-1;
-        cardPlayed = new MatchMessageCardPlayed(card.baseCard.cardID, (int)card.baseCard.cardType, absPos);
+        cardPlayed = new MatchMessageCardPlayed(card.baseCard.cardID, (int)card.baseCard.cardType, absPos, cardNetID);
         MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayed, cardPlayed);
         OrganizeCards();
     }

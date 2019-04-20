@@ -17,12 +17,14 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication.MatchStates
         public int cardID;
         public int cardType;
         public int absPos;
+        public int netID;
 
-        public MatchMessageCardPlayed(int cardID, int cardType, int absPos)
+        public MatchMessageCardPlayed(int cardID, int cardType, int absPos, int networkID)
         {
             this.cardID = cardID;
             this.cardType = cardType;
             this.absPos = absPos;
+            this.netID = networkID;
         }
 
         #endregion
