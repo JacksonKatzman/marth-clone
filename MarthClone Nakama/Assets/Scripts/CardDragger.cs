@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro.Examples;
+using DemoGame.Scripts.Gameplay.NetworkCommunication;
+using DemoGame.Scripts.Gameplay.NetworkCommunication.MatchStates;
 
 public class CardDragger : MonoBehaviour
 {
@@ -134,5 +136,7 @@ public class CardDragger : MonoBehaviour
         PlayableMinion me = GetComponent<PlayableMinion>();
         card.RecieveAttack(me);
         me.RecieveAttack(card);
+        MatchMessageHandleCombat combat = new MatchMessageHandleCombat(me.networkID, card.networkID);
+        MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayed, combat);
     }
 }
