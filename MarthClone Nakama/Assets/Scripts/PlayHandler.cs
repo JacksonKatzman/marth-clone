@@ -49,4 +49,9 @@ public class PlayHandler : MonoBehaviour
         return false;
     }
 
+    public void StartTurn()
+    {
+        DrawCard();
+    }
+
 }

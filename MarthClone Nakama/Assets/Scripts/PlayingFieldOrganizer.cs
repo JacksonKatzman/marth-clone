@@ -38,11 +38,11 @@ public class PlayingFieldOrganizer : MonoBehaviour
         startPos -= 4 * (((numCards+1) / 2)-1);
         for(int a = 0; a < numCards; a++)
         {
-            Vector3 v = new Vector3(startPos, 0, 0);
+            Vector3 v = new Vector3(startPos, 0, transform.position.z);
             Debug.Log("Should be setting card " + a + " to: " + v.ToString());
             //cards[a].gameObject.transform.localPosition.Set(startPos, 0, 0);
             //cards[a].transform.localPosition = v;
-            cards[a].GetComponent<CardDragger>().BeginLerp(cards[a].transform.localPosition, v);
+            cards[a].GetComponent<CardDragger>().BeginLerp(cards[a].transform.position, v);
             startPos += 4;
         }
     }

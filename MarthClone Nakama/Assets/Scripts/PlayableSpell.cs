@@ -24,4 +24,19 @@ public class PlayableSpell : PlayableCard
     {
         base.OnCardPlayed();
     }
+    public override void SetDrawLayer(int a)
+    {
+        a *= 2;
+        cardArt.sortingOrder = a;
+        cardFrame.sortingOrder = a + 1;
+        cardName.sortingOrder = a+1;
+        manaCostText.sortingOrder = a + 1;
+        descriptionText.sortingOrder = a + 1;
+        raritySprite.sortingOrder = a + 1;
+    }
+
+    public override void RecieveAttack(PlayableCard other)
+    {
+
+    }
 }

@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public Dictionary<string, Deck> localDecks;
     public Deck currentDeck;
     public PlayHandler playHandler;
+    public MatchUI matchUI;
     // Start is called before the first frame update
     void Awake()
     {
@@ -128,5 +129,10 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Error in Log in: " + response);
         }
+    }
+
+    public void StartTurn()
+    {
+        playHandler.StartTurn();
     }
 }

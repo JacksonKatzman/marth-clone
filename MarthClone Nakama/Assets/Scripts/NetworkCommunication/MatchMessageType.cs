@@ -36,6 +36,8 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication.MatchStates
 
         ActionPointsAdded,
 
+        TurnEnded,
+
         #endregion
 
         #region UNITS

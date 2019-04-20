@@ -33,6 +33,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
         public event Action OnGameStarted;
         
         public event Action<MatchMessageGameEnded> OnGameEnded;
+        public event Action<MatchMessageEndTurn> OnTurnEnded;
         /*
         //UNITS
         public event Action<MatchMessageUnitSpawned> OnUnitSpawned;
@@ -305,7 +306,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
                 _incommingMessages.Enqueue(new IncommingMessageState(opCode, messageJson));
                 return;
             }
-            /*
+            
             //Choosing which event should be invoked basing on opCode, then parsing json to MatchMessage class and firing event
             switch ((MatchMessageType)opCode)
             {
@@ -315,54 +316,61 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
                     OnGameEnded?.Invoke(matchMessageGameEnded);
                     break;
 
-                //UNITS
-                case MatchMessageType.UnitSpawned:
-                    MatchMessageUnitSpawned matchMessageUnitSpawned = MatchMessageUnitSpawned.Parse(messageJson);
-                    OnUnitSpawned?.Invoke(matchMessageUnitSpawned);
+                case MatchMessageType.TurnEnded:
+                    MatchMessageEndTurn matchMessageTurnEnded = MatchMessageEndTurn.Parse(messageJson);
+                    OnTurnEnded?.Invoke(matchMessageTurnEnded);
+                    GameManager.instance.StartTurn();
                     break;
+                    /*
+                                    //UNITS
+                                    case MatchMessageType.UnitSpawned:
+                                        MatchMessageUnitSpawned matchMessageUnitSpawned = MatchMessageUnitSpawned.Parse(messageJson);
+                                        OnUnitSpawned?.Invoke(matchMessageUnitSpawned);
+                                        break;
 
-                case MatchMessageType.UnitMoved:
-                    MatchMessageUnitMoved matchMessageUnitMoved = MatchMessageUnitMoved.Parse(messageJson);
-                    OnUnitMoved?.Invoke(matchMessageUnitMoved);
-                    break;
+                                    case MatchMessageType.UnitMoved:
+                                        MatchMessageUnitMoved matchMessageUnitMoved = MatchMessageUnitMoved.Parse(messageJson);
+                                        OnUnitMoved?.Invoke(matchMessageUnitMoved);
+                                        break;
 
-                case MatchMessageType.UnitAttacked:
-                    MatchMessageUnitAttacked matchMessageUnitAttacked = MatchMessageUnitAttacked.Parse(messageJson);
-                    OnUnitAttacked?.Invoke(matchMessageUnitAttacked);
-                    break;
+                                    case MatchMessageType.UnitAttacked:
+                                        MatchMessageUnitAttacked matchMessageUnitAttacked = MatchMessageUnitAttacked.Parse(messageJson);
+                                        OnUnitAttacked?.Invoke(matchMessageUnitAttacked);
+                                        break;
 
-                //SPELLS
-                case MatchMessageType.SpellActivated:
-                    MatchMessageSpellActivated matchMessageSpellActivated = MatchMessageSpellActivated.Parse(messageJson);
-                    OnSpellActivated?.Invoke(matchMessageSpellActivated);
-                    break;
+                                    //SPELLS
+                                    case MatchMessageType.SpellActivated:
+                                        MatchMessageSpellActivated matchMessageSpellActivated = MatchMessageSpellActivated.Parse(messageJson);
+                                        OnSpellActivated?.Invoke(matchMessageSpellActivated);
+                                        break;
 
-                //CARDS
-                case MatchMessageType.CardPlayRequest:
-                    if (IsHost == true)
-                    {
-                        MatchMessageCardPlayRequest matchMessageCardPlayRequest = MatchMessageCardPlayRequest.Parse(messageJson);
-                        OnCardRequested?.Invoke(matchMessageCardPlayRequest);
-                    }
-                    break;
+                                    //CARDS
+                                    case MatchMessageType.CardPlayRequest:
+                                        if (IsHost == true)
+                                        {
+                                            MatchMessageCardPlayRequest matchMessageCardPlayRequest = MatchMessageCardPlayRequest.Parse(messageJson);
+                                            OnCardRequested?.Invoke(matchMessageCardPlayRequest);
+                                        }
+                                        break;
 
-                case MatchMessageType.CardPlayed:
-                    MatchMessageCardPlayed matchMessageCardPlayed = MatchMessageCardPlayed.Parse(messageJson);
-                    OnCardPlayed?.Invoke(matchMessageCardPlayed);
-                    break;
+                                    case MatchMessageType.CardPlayed:
+                                        MatchMessageCardPlayed matchMessageCardPlayed = MatchMessageCardPlayed.Parse(messageJson);
+                                        OnCardPlayed?.Invoke(matchMessageCardPlayed);
+                                        break;
 
 
-                case MatchMessageType.CardCanceled:
-                    MatchMessageCardCanceled matchMessageCardCancelled = MatchMessageCardCanceled.Parse(messageJson);
-                    OnCardCancelled?.Invoke(matchMessageCardCancelled);
-                    break;
+                                    case MatchMessageType.CardCanceled:
+                                        MatchMessageCardCanceled matchMessageCardCancelled = MatchMessageCardCanceled.Parse(messageJson);
+                                        OnCardCancelled?.Invoke(matchMessageCardCancelled);
+                                        break;
 
-                case MatchMessageType.StartingHand:
-                    MatchMessageStartingHand matchMessageStartingHand = MatchMessageStartingHand.Parse(messageJson);
-                    OnStartingHandReceived?.Invoke(matchMessageStartingHand);
-                    break;
+                                    case MatchMessageType.StartingHand:
+                                        MatchMessageStartingHand matchMessageStartingHand = MatchMessageStartingHand.Parse(messageJson);
+                                        OnStartingHandReceived?.Invoke(matchMessageStartingHand);
+                                        break;
+                                        */
             }
-            */
+            
         }
 
         /// <summary>
@@ -512,7 +520,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
         /// <returns></returns>
         private IEnumerator LoadMenuCoroutine()
         {
-            AsyncOperation operation = SceneManager.LoadSceneAsync("MainScene", LoadSceneMode.Additive);
+            AsyncOperation operation = SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
             while (operation.isDone == false)
             {
                 yield return null;

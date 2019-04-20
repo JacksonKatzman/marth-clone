@@ -8,6 +8,7 @@ using CardInfo;
 public class PlayableCard : MonoBehaviour
 {
     public Card baseCard;
+    public SpriteRenderer cardFrame;
     public TextMeshPro cardName;
     public SpriteRenderer cardArt;
     public TextMeshPro manaCostText, descriptionText;
@@ -26,6 +27,16 @@ public class PlayableCard : MonoBehaviour
         {
             effect.Trigger();
         }
+    }
+
+    public virtual void SetDrawLayer(int a)
+    {
+
+    }
+
+    public virtual void RecieveAttack(PlayableCard other)
+    {
+
     }
 
     public string ConvertCardNameForDisplay()

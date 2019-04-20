@@ -892,6 +892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseCard: {fileID: 11400000, guid: d2f1e3d6b344d054591821d9d57f9d2a, type: 2}
+  cardFrame: {fileID: 32962699641923933}
   cardName: {fileID: 6568359815256653689}
   cardArt: {fileID: 7698070354953526296}
   manaCostText: {fileID: 5480824032973031565}

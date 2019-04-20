@@ -5,7 +5,9 @@ using TMPro.Examples;
 
 public class CardDragger : MonoBehaviour
 {
+    public bool owned = true;
     public bool inHand = true;
+    public bool dragable = true;
     private Vector3 mOffset;
     private float mZCoord;
     private Vector3 originalPos;
@@ -49,19 +51,30 @@ public class CardDragger : MonoBehaviour
     }
     void OnMouseDrag()
     {
-        if(inHand)
+        if (dragable && owned)
         {
-            transform.position = GetMouseWorldPos() + mOffset;
-            targetPosition = transform.position;
+            if (!inHand)
+            {
+                //Debug.Log("DRAGGING ON BOARD!");
+                GameObject.Find("MatchUI").GetComponent<MatchUI>().SetRedArrow(originalPos, Input.mousePosition);
+            }
+            else
+            {
+                transform.position = GetMouseWorldPos() + mOffset;
+                targetPosition = transform.position;
+            }
         }
     }
 
     void OnMouseUp()
     {
+
         if (!inHand)
         {
             transform.position = originalPos;
             targetPosition = transform.position;
+            GameObject.Find("MatchUI").GetComponent<MatchUI>().HideRedArrow();
+            CheckValidTarget();
         }
         else
         {
@@ -96,5 +109,30 @@ public class CardDragger : MonoBehaviour
         journeyLength = Vector3.Distance(startPos, endPos);
         startTime = Time.time;
         moving = true;
+    }
+
+    void CheckValidTarget()
+    {
+        if(!inHand && dragable && owned)
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if(Physics.Raycast(ray, out hit))
+            {
+                PlayableCard card = hit.transform.gameObject.GetComponent<PlayableCard>();
+                if(card != null)
+                {
+                    BeginAttack(card);
+                }
+            }
+        }
+    }
+
+    void BeginAttack(PlayableCard card)
+    {
+        //LOTS OF PLACEHOLDER CODE HERE
+        PlayableMinion me = GetComponent<PlayableMinion>();
+        card.RecieveAttack(me);
+        me.RecieveAttack(card);
     }
 }

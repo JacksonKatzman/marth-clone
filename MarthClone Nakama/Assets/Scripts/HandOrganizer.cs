@@ -42,6 +42,7 @@ public class HandOrganizer : MonoBehaviour
     void OrganizeCards()
     {
         int numCards = cards.Count;
+        float moveAmount = 8.0f/numCards;
         Debug.Log("Organizing " + numCards + " cards.");
         if (numCards == 0)
             return;
@@ -53,16 +54,20 @@ public class HandOrganizer : MonoBehaviour
         float startPos = 0;
         if (numCards % 2 == 0)
         {
-            startPos -= 1.5f;
+            startPos -= moveAmount/2;
         }
-        startPos -= 3 * (((numCards + 1) / 2) - 1);
+        startPos -= moveAmount * (((numCards + 1) / 2) - 1);
         for (int a = 0; a < numCards; a++)
         {
-            Vector3 v = new Vector3(startPos, 0.01f * a, 0);
+            Vector3 v = new Vector3(startPos, 0.01f*a, 0);
+            //Vector3 v = new Vector3(startPos, 0.01f * a, -1 * Mathf.Abs(startPos / numCards));
             Debug.Log("Should be setting card " + a + " to: " + v.ToString());
             //cards[a].gameObject.transform.localPosition.Set(startPos, 0, 0);
             cards[a].transform.localPosition = v;
-            startPos += 3;
+            cards[a].SetDrawLayer(a);
+            //cards[a].transform.RotateAroundLocal(transform.up, 5 * startPos);
+            //cards[a].transform.Rotate(new Vector3(0, 5 * startPos, 0));
+            startPos += moveAmount;
         }
     }
 
