@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public Deck currentDeck;
     public PlayHandler playHandler;
     public MatchUI matchUI;
+
+    bool myTurn = true;
     // Start is called before the first frame update
     void Awake()
     {
@@ -133,6 +135,21 @@ public class GameManager : MonoBehaviour
 
     public void StartTurn()
     {
-        playHandler.StartTurn();
+        if (!myTurn)
+        {
+            myTurn = true;
+            playHandler.StartTurn();
+            Debug.Log("Your turn has started!");
+        }
+    }
+
+    public void EndTurn()
+    {
+        if (myTurn)
+        {
+            myTurn = false;
+            playHandler.EndTurn();
+            Debug.Log("Your turn has ended.");
+        }
     }
 }

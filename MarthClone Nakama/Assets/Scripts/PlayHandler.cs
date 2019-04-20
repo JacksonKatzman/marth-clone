@@ -54,4 +54,9 @@ public class PlayHandler : MonoBehaviour
         DrawCard();
     }
 
+    public void EndTurn()
+    {
+
+    }
+
 }

@@ -317,8 +317,8 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
                     break;
 
                 case MatchMessageType.TurnEnded:
-                    MatchMessageEndTurn matchMessageTurnEnded = MatchMessageEndTurn.Parse(messageJson);
-                    OnTurnEnded?.Invoke(matchMessageTurnEnded);
+                    //MatchMessageEndTurn matchMessageTurnEnded = MatchMessageEndTurn.Parse(messageJson);
+                    //OnTurnEnded?.Invoke(matchMessageTurnEnded);
                     GameManager.instance.StartTurn();
                     break;
                     /*

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DemoGame.Scripts.Gameplay.NetworkCommunication;
+using DemoGame.Scripts.Gameplay.NetworkCommunication.MatchStates;
 
 public class EndTurnButton : MonoBehaviour
 {
@@ -10,7 +11,10 @@ public class EndTurnButton : MonoBehaviour
     {
         if(MatchCommunicationManager.Instance != null)
         {
-            //MatchCommunicationManager.Instance.SendMatchStateMessage(DemoGame.Scripts.Gameplay.NetworkCommunication.MatchStates.MatchMessageType.TurnEnded)
+            MatchMessageEndTurn endturn = new MatchMessageEndTurn("", 0.0f);
+            MatchCommunicationManager.Instance.SendMatchStateMessage(DemoGame.Scripts.Gameplay.NetworkCommunication.MatchStates.MatchMessageType.TurnEnded, endturn);
+            //Locally end turn.
+            GameManager.instance.EndTurn();
         }
         else
         {
