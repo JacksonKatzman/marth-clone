@@ -24,7 +24,7 @@ public class PlayingFieldOrganizer : MonoBehaviour
     void OrganizeCards()
     {
         int numCards = cards.Count;
-        Debug.Log("Organizing " + numCards + " cards.");
+       // Debug.Log("Organizing " + numCards + " cards.");
         if (numCards == 0)
             return;
         if(numCards == 1)
@@ -41,7 +41,7 @@ public class PlayingFieldOrganizer : MonoBehaviour
         for(int a = 0; a < numCards; a++)
         {
             Vector3 v = new Vector3(startPos, 0, transform.position.z);
-            Debug.Log("Should be setting card " + a + " to: " + v.ToString());
+           // Debug.Log("Should be setting card " + a + " to: " + v.ToString());
             //cards[a].gameObject.transform.localPosition.Set(startPos, 0, 0);
             //cards[a].transform.localPosition = v;
             cards[a].GetComponent<CardDragger>().BeginLerp(cards[a].transform.position, v);
@@ -63,8 +63,8 @@ public class PlayingFieldOrganizer : MonoBehaviour
 
     public void RemoveCard(PlayableCard card)
     {
-        cards.Remove(card);
         OrganizeCards();
+        cards.Remove(card);    
     }
 
     public void AddCard(PlayableCard card, int absPos)
@@ -123,6 +123,16 @@ public class PlayingFieldOrganizer : MonoBehaviour
         for(int a = 0; a < this.transform.childCount; a++)
         {
             cards.Add(transform.GetChild(a).GetComponent<PlayableCard>());
+        }
+    }
+
+    public void MakeCardsPlayable(bool playable)
+    {
+        foreach (PlayableCard card in cards)
+        {
+            CardDragger dragger = card.GetComponent<CardDragger>();
+            dragger.dragable = playable;
+            card.particles.SetActive(playable);
         }
     }
 }

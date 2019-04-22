@@ -134,13 +134,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void StartFirstTurn(bool goingFirst)
+    {
+        //SetIfMyTurn(goingFirst);
+        Debug.Log("Starting First Turn!");
+        playHandler.SetupFirstTurn(goingFirst);
+        myTurn = goingFirst;
+    }
+
     public void StartTurn()
     {
         if (!myTurn)
         {
-            myTurn = true;
-            playHandler.StartTurn();
-            Debug.Log("Your turn has started!");
+            SetIfMyTurn(true);
         }
     }
 
@@ -148,9 +154,20 @@ public class GameManager : MonoBehaviour
     {
         if (myTurn)
         {
-            myTurn = false;
+            SetIfMyTurn(false);
+        }
+    }
+
+    void SetIfMyTurn(bool b)
+    {
+        myTurn = b;
+        if(myTurn)
+        {
+            playHandler.StartTurn();
+        }
+        else
+        {
             playHandler.EndTurn();
-            Debug.Log("Your turn has ended.");
         }
     }
 }

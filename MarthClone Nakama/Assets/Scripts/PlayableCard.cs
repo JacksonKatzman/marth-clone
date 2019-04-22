@@ -14,6 +14,7 @@ public class PlayableCard : MonoBehaviour
     public TextMeshPro manaCostText, descriptionText;
     public SpriteRenderer raritySprite;
     public int networkID;
+    public GameObject particles;
     protected int manacost;
     
 
@@ -85,5 +86,10 @@ public class PlayableCard : MonoBehaviour
             toRet = (Sprite)Resources.Load<Sprite>("Rarity_Legendary");
         }
         return toRet;
+    }
+
+    public void SetParticlesAwake(bool b)
+    {
+        particles.SetActive(b);
     }
 }

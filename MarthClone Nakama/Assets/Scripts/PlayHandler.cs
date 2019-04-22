@@ -9,6 +9,7 @@ public class PlayHandler : MonoBehaviour
     public PlayingFieldOrganizer myPlayingFieldOrganizer, opponentFieldOrganizer;
     public List<PlayableCard> playableDeck;
     public DeckManager deckManager;
+    public EndTurnButton endTurnButton;
 
     [SerializeField] GameObject PlayableMinionPrefab;
     [SerializeField] GameObject PlayableSpellPrefab;
@@ -20,9 +21,11 @@ public class PlayHandler : MonoBehaviour
         {
             GameManager.instance.playHandler = this;
             deckManager.BuildDeckInitial();
+            /*
             DrawCard();
             DrawCard();
             DrawCard();
+            */
         }
     }
 
@@ -44,20 +47,28 @@ public class PlayHandler : MonoBehaviour
             playableCard.baseCard = cardTemplate;
             playableCard.SetToBaseCard();
             cardObj.GetComponent<CardDragger>().playHandler = this;
+            cardObj.GetComponent<CardDragger>().owned = true;
+            cardObj.GetComponent<CardDragger>().inHand = true;
             myHandOrganizer.AttemptToAddCard(playableCard);
             deckManager.playableDeck.RemoveAt(0);
         }
         return false;
     }
 
+
     public void StartTurn()
     {
         DrawCard();
+        myHandOrganizer.MakeCardsPlayable(true);
+        myPlayingFieldOrganizer.MakeCardsPlayable(true);
+        endTurnButton.ChangeSprite(true);
+        //Toggle the end turn button back
     }
 
     public void EndTurn()
     {
-
+        myHandOrganizer.MakeCardsPlayable(false);
+        myPlayingFieldOrganizer.MakeCardsPlayable(false);
     }
 
     public void OpponentPlayedCard(int cardID, int cardType, int absPos, int netID)
@@ -102,4 +113,23 @@ public class PlayHandler : MonoBehaviour
         }
     }
 
+    public void SetupFirstTurn(bool goingFirst)
+    {
+        if(goingFirst)
+        {
+            DrawCard();
+            DrawCard();
+            DrawCard();
+            //Handle Mulligans implemented later
+            StartTurn();
+        }
+        else
+        {
+            DrawCard();
+            DrawCard();
+            DrawCard();
+            DrawCard();
+            EndTurn();
+        }
+    }
 }
