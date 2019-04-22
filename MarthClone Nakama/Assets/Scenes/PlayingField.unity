@@ -1364,6 +1364,9 @@ MonoBehaviour:
   deckManager: {fileID: 1014331773}
   endTurnButton: {fileID: 525704011}
   manaText: {fileID: 1428808054}
+  heroCards:
+  - {fileID: 888804801}
+  - {fileID: 19833267}
   PlayableMinionPrefab: {fileID: 3574098625363096440, guid: b7619d9c47b89bd4caadda5b8587723a,
     type: 3}
   PlayableSpellPrefab: {fileID: 1617733379129067449, guid: f33d4fade2bf73041b7e36a4b5f8578e,
