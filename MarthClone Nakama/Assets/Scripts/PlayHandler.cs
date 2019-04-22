@@ -16,6 +16,7 @@ public class PlayHandler : MonoBehaviour
     int maxMana = 0;
     int currentMana = 0;
     public TextMeshPro manaText;
+    public List<PlayableCard> heroCards;
 
     [SerializeField] GameObject PlayableMinionPrefab;
     [SerializeField] GameObject PlayableSpellPrefab;
@@ -101,7 +102,7 @@ public class PlayHandler : MonoBehaviour
 
     public void HandleIncomingCombat(int theirID, int myID)
     {
-        PlayableMinion myCard = null;
+        PlayableCard myCard = null;
         PlayableMinion theirCard = null;
         foreach(PlayableCard c in myPlayingFieldOrganizer.cards)
         {
@@ -117,6 +118,13 @@ public class PlayHandler : MonoBehaviour
             {
                 theirCard = (PlayableMinion)c;
                 continue;
+            }
+        }
+        foreach(PlayableCard c in heroCards)
+        {
+            if(c.networkID == myID)
+            {
+                myCard = c;
             }
         }
         if(myCard != null && theirCard != null)
