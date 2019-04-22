@@ -181,6 +181,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
                 }
                 else
                 {
+                    Debug.Log("Duplicate USERS! Leaving.");
                     LeaveGame();
                 }
             }
