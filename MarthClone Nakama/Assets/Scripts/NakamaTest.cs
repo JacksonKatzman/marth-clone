@@ -33,7 +33,7 @@ public class NakamaTest : MonoBehaviour
         }
         //var deviceid = SystemInfo.deviceUniqueIdentifier;
         var email = "notnearlymad@gmail.com";
-        var password = "suckmydick";
+        var password = "default_password";
         var username = "notnearlymad";
         _session = await _client.AuthenticateEmailAsync(email, password, username, true);
 
