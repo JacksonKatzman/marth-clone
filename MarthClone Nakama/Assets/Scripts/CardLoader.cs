@@ -34,7 +34,7 @@ public class CardLoader : MonoBehaviour
         //Sorts by Mana Cost then Name -- simple enough for now
         sortedCards = sortedCards.OrderBy(card => card.manaCost).ThenBy(card => card.name).ToList();
 
-        Debug.Log("Sorted Cards Length: " + sortedCards.Count);
+        //Debug.Log("Sorted Cards Length: " + sortedCards.Count);
         cardViewers = new List<GameObject>();
 
         int numViewers = sortedCards.Count / 6;
@@ -42,7 +42,7 @@ public class CardLoader : MonoBehaviour
         {
             ++numViewers;
         }
-        Debug.Log("Num Card Viewers: " + numViewers);
+        //Debug.Log("Num Card Viewers: " + numViewers);
         for(int a = 0; a < numViewers; a++)
         {
             GameObject viewer = Instantiate(CardViewerPrefab, mmc.DeckBuilder.transform);

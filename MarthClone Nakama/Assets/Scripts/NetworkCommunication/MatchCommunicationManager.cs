@@ -507,7 +507,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
                 return;
             }
             GameStarted = true;
-            GameManager.instance.StartFirstTurn(IsHost);
+            //GameManager.instance.StartFirstTurn(IsHost);
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 Debug.Log("Starting game");

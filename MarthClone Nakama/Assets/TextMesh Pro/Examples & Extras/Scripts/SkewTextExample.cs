@@ -106,7 +106,7 @@ namespace TMPro.Examples
                         continue;
                     if(textInfo.characterInfo[i].character == '$')
                     {
-                        Debug.Log("Char was a $");
+                        //Debug.Log("Char was a $");
                         // Get the index of the material used by the current character.
                         int a = textInfo.characterInfo[i].materialReferenceIndex;
 
