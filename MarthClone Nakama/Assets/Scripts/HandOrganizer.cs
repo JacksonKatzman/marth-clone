@@ -90,6 +90,12 @@ public class HandOrganizer : MonoBehaviour
                 dragger.dragable = playable;
                 card.particles.SetActive(playable);
             }
+            else
+            {
+                CardDragger dragger = card.GetComponent<CardDragger>();
+                dragger.dragable = false;
+                card.particles.SetActive(false);
+            }
         }
     }
 }

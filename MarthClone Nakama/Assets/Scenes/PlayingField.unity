@@ -185,7 +185,7 @@ MonoBehaviour:
   particles: {fileID: 0}
   manacost: 0
   attack: 0
-  health: 0
+  health: 30
   healthText: {fileID: 1918883130}
 --- !u!1 &131267674
 GameObject:
@@ -1010,7 +1010,7 @@ MonoBehaviour:
   particles: {fileID: 0}
   manacost: 0
   attack: 0
-  health: 0
+  health: 30
   healthText: {fileID: 1899813040}
 --- !u!65 &888804802
 BoxCollider:

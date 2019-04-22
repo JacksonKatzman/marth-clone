@@ -71,7 +71,7 @@ public class PlayHandler : MonoBehaviour
         if(maxMana < 10)
             maxMana += 1;
         currentMana = maxMana;
-        myHandOrganizer.MakeCardsPlayable(true);
+        UpdateMana();
         myPlayingFieldOrganizer.MakeCardsPlayable(true);
         endTurnButton.ChangeSprite(true);
         //Toggle the end turn button back
