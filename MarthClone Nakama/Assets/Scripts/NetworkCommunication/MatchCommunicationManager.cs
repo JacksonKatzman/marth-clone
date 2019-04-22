@@ -518,6 +518,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
                     ReceiveMatchStateHandle(incommingMessage.opCode, incommingMessage.message);
                 }
             });
+            GameManager.instance.StartFirstTurn(IsHost);
         }
 
         private void GameEnded(MatchMessageGameEnded obj)

@@ -69,6 +69,7 @@ public class PlayHandler : MonoBehaviour
     {
         myHandOrganizer.MakeCardsPlayable(false);
         myPlayingFieldOrganizer.MakeCardsPlayable(false);
+        endTurnButton.ChangeSprite(false);
     }
 
     public void OpponentPlayedCard(int cardID, int cardType, int absPos, int netID)
