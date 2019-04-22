@@ -494,13 +494,13 @@ namespace DemoGame.Scripts.Session
 
                 return response;
             }
-            
+
             catch (ApiResponseException e)
             {
                 Debug.LogError("Couldn't update user info with code " + e.StatusCode + ": " + e);
                 return AuthenticationResponse.Error;
             }
-            
+
             catch (Exception e)
             {
                 Debug.LogError("Couldn't update user info: " + e);
@@ -587,7 +587,7 @@ namespace DemoGame.Scripts.Session
         /// </summary>
         private void OnMatchmakerMatched(object sender, IMatchmakerMatched e)
         {
-            
+
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 ISocket socket = NakamaSessionManager.Instance.Socket;
@@ -595,7 +595,7 @@ namespace DemoGame.Scripts.Session
 
                 StartCoroutine(LoadBattle(e));
             });
-            
+
         }
 
         /// <summary>
@@ -618,7 +618,7 @@ namespace DemoGame.Scripts.Session
         public async void StartMachmaker()
         {
             bool joined = await StartMatchmakerAsync();
-            if(joined)
+            if (joined)
             {
                 Debug.Log("Matchmaking started successfully.");
             }
@@ -644,7 +644,7 @@ namespace DemoGame.Scripts.Session
         /// Starts the game scene and joins the match
         /// </summary>
         /// 
-        
+
         private IEnumerator LoadBattle(IMatchmakerMatched matched)
         {
             AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("PlayingField", UnityEngine.SceneManagement.LoadSceneMode.Additive);
@@ -656,6 +656,16 @@ namespace DemoGame.Scripts.Session
 
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("MainMenu");
             MatchCommunicationManager.Instance.JoinMatchAsync(matched);
+        }
+        
+        public async Task<int> GetNextNetworkID()
+        {
+            var payload = "";
+            var rpcid = "next_card_id";
+            var info = await _client.RpcAsync(Session, rpcid, payload);
+            string id = info.Payload;
+            Debug.Log("Returning ID: " + id);
+            return Int32.Parse(id);
         }
         
         /*
@@ -825,5 +835,6 @@ namespace DemoGame.Scripts.Session
         #endregion
     */
     }
+   
 
 }

@@ -80,9 +80,10 @@ public class PlayingFieldOrganizer : MonoBehaviour
 
     void AddCard(PlayableCard card, Vector3 pos)
     {
-        int cardNetID = GameManager.instance.currentNextID;
-        card.networkID = cardNetID;
-        GameManager.instance.currentNextID++;
+        int cardNetID = card.networkID;
+        //int cardNetID = GameManager.instance.currentNextID;
+        //card.networkID = cardNetID;
+       // GameManager.instance.currentNextID++;
         int absPos = 0;
         MatchMessageCardPlayed cardPlayed;
         if (cards.Count == 0)

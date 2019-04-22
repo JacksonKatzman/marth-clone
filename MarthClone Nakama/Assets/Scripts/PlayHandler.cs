@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CardInfo;
 using TMPro;
+using DemoGame.Scripts.Session;
 
 public class PlayHandler : MonoBehaviour
 {
@@ -48,6 +49,9 @@ public class PlayHandler : MonoBehaviour
                 cardObj = Instantiate(PlayableSpellPrefab);
             }
             PlayableCard playableCard = cardObj.GetComponent<PlayableCard>();
+            int id = (NakamaSessionManager.Instance.GetNextNetworkID()).Result;
+            Debug.Log("assigning card the id: " + id);
+            playableCard.networkID = id;
             playableCard.baseCard = cardTemplate;
             playableCard.SetToBaseCard();
             cardObj.GetComponent<CardDragger>().playHandler = this;
