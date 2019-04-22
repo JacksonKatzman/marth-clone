@@ -9,6 +9,7 @@ public class PlayHandler : MonoBehaviour
 {
     public HandOrganizer myHandOrganizer, opponentHandOrganizer;
     public PlayingFieldOrganizer myPlayingFieldOrganizer, opponentFieldOrganizer;
+    public HeroCard myHeroCard, enemyHeroCard;
     public List<PlayableCard> playableDeck;
     public DeckManager deckManager;
     public EndTurnButton endTurnButton;
@@ -129,6 +130,8 @@ public class PlayHandler : MonoBehaviour
     {
         if(goingFirst)
         {
+            myHeroCard.networkID = -1;
+            enemyHeroCard.networkID = -2;
             DrawCard();
             DrawCard();
             DrawCard();
@@ -137,6 +140,8 @@ public class PlayHandler : MonoBehaviour
         }
         else
         {
+            myHeroCard.networkID = -2;
+            enemyHeroCard.networkID = -1;
             DrawCard();
             DrawCard();
             DrawCard();
