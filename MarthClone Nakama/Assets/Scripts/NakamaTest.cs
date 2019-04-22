@@ -31,8 +31,42 @@ public class NakamaTest : MonoBehaviour
                 return;
             }
         }
-        var deviceid = SystemInfo.deviceUniqueIdentifier;
-        _session = await _client.AuthenticateDeviceAsync(deviceid);
+        //var deviceid = SystemInfo.deviceUniqueIdentifier;
+        var email = "notnearlymad@gmail.com";
+        var password = "suckmydick";
+        var username = "notnearlymad";
+        _session = await _client.AuthenticateEmailAsync(email, password, username, true);
+
+        var payload = "{\"name\": \"Jon\"}";
+        var rpcid = "hello_world";
+        var pokemonInfo = await _client.RpcAsync(_session, rpcid, payload);
+        Debug.LogFormat("Retrieved pokemon info: {0}", pokemonInfo);
+    }
+
+    /**
+    private async void Awake()
+    {
+        Debug.Log("NakamaTest: Awake");
+        var authtoken = ""; // PlayerPrefs.GetString(PrefKeyName);
+        Debug.Log("PlayerPrefsGetString: " + authtoken);
+        if (!string.IsNullOrEmpty(authtoken))
+        {
+            //Debug.Log("Auth token was not null or open!");
+            var session = Session.Restore(authtoken);
+            //Debug.Log(new DateTime(session.ExpireTime));
+            if (!session.IsExpired)
+            {
+                _session = session;
+                Debug.Log(_session);
+                Debug.Log("Hit this weird place.");
+                return;
+            }
+        }
+        //var deviceid = SystemInfo.deviceUniqueIdentifier;
+        var email = "notnearlymad@gmail.com";
+        var password = "suckmydick";
+        var username = "notnearlymad";
+        _session = await _client.AuthenticateEmailAsync(email, password, username, false);
         //PlayerPrefs.SetString(PrefKeyName, _session.AuthToken);
         _socket = _client.CreateWebSocket();
         _socket.OnConnect += (sender, args) =>
@@ -47,6 +81,7 @@ public class NakamaTest : MonoBehaviour
         Debug.Log(_session);
         Debug.Log(new DateTime(_session.ExpireTime));
     }
+    **/
 
     public async void AttemptMatchmake()
     {
