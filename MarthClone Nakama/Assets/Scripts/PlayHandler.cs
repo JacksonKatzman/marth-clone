@@ -125,6 +125,7 @@ public class PlayHandler : MonoBehaviour
             if(c.networkID == myID)
             {
                 myCard = c;
+                continue;
             }
         }
         if(myCard != null && theirCard != null)
