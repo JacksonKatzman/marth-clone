@@ -558,7 +558,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
 
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                SceneManager.UnloadSceneAsync("BattleScene");
+                SceneManager.UnloadSceneAsync("PlayingField");
             });
 
         }
