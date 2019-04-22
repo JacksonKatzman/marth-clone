@@ -49,9 +49,9 @@ public class PlayHandler : MonoBehaviour
                 cardObj = Instantiate(PlayableSpellPrefab);
             }
             PlayableCard playableCard = cardObj.GetComponent<PlayableCard>();
-            int id = (NakamaSessionManager.Instance.GetNextNetworkID()).Result;
-            Debug.Log("assigning card the id: " + id);
-            playableCard.networkID = id;
+            //int id = (NakamaSessionManager.Instance.GetNextNetworkID()).Result;
+            //Debug.Log("assigning card the id: " + id);
+            //playableCard.networkID = id;
             playableCard.baseCard = cardTemplate;
             playableCard.SetToBaseCard();
             cardObj.GetComponent<CardDragger>().playHandler = this;
