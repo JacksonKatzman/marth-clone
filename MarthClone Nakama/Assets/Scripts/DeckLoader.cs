@@ -29,7 +29,7 @@ public class DeckLoader : MonoBehaviour
         Debug.Log("Trying to change currently selected deck!");
         if (GameManager.instance.localDecks.ContainsKey(deckName))
         {
-            Debug.Log("Deck Name Found in localDecks!");
+            //Debug.Log("Deck Name Found in localDecks!");
             //GameManager.instance.localDecks.TryGetValue(deckName, out currentDeckSelected);
             //currentDeckSelected = GameManager.instance.localDecks[deckName];
             currentDeckSelected = new Deck(deckName, GameManager.instance.localDecks[deckName].deckContents);

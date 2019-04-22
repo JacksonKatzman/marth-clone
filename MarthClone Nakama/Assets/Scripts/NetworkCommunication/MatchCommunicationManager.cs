@@ -332,6 +332,15 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
                     //OnTurnEnded?.Invoke(matchMessageTurnEnded);
                     GameManager.instance.playHandler.HandleIncomingCombat(combat.myNetID, combat.enemyNetID);
                     break;
+                case MatchMessageType.MatchStarted:
+                    Debug.Log("Recieved message: Match started!");
+                    if(GameManager.instance != null)
+                        //GameManager.instance.StartFirstTurn(IsHost);
+                    else
+                    {
+                        Debug.Log("NULL GAME MANAGER");
+                    }
+                    break;
                     /*
                                     //UNITS
                                     case MatchMessageType.UnitSpawned:
@@ -507,18 +516,19 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
                 return;
             }
             GameStarted = true;
-            //GameManager.instance.StartFirstTurn(IsHost);
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 Debug.Log("Starting game");
                 OnGameStarted?.Invoke();
+                GameManager.instance.StartFirstTurn(IsHost);
                 while (_incommingMessages.Count > 0)
                 {
+                    Debug.Log("DEQUEUING MESSAGE!");
                     IncommingMessageState incommingMessage = _incommingMessages.Dequeue();
                     ReceiveMatchStateHandle(incommingMessage.opCode, incommingMessage.message);
                 }
             });
-            GameManager.instance.StartFirstTurn(IsHost);
+            
         }
 
         private void GameEnded(MatchMessageGameEnded obj)

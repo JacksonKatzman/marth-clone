@@ -24,7 +24,7 @@ public class DeckSelectorButton : MonoBehaviour {
     public void OnClick()
     {
         deckLoader.ChangeCurrentSelectedDeck(deckName, forEditor);
-        Debug.Log("Deck Selector Button Clicked!");
+        //Debug.Log("Deck Selector Button Clicked!");
     }
 
 	

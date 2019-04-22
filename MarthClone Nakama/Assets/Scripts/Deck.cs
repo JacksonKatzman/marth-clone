@@ -19,16 +19,16 @@ public class Deck
     {
         this.name = deckName;
         this.deckContents = new Dictionary<int, int>();
-        Debug.Log("Begin Loading Deck with Contents: " + contents);
+        //Debug.Log("Begin Loading Deck with Contents: " + contents);
         string[] cardPairs = contents.Split(',');
         for(int a = 0; a < cardPairs.Length-1; a++)
         {
-            Debug.Log("CARD PAIR: " + cardPairs[a]);
+            //Debug.Log("CARD PAIR: " + cardPairs[a]);
             string[] cardInfo = cardPairs[a].Split('/');
             int id = Int32.Parse(cardInfo[0]);
-            Debug.Log("Card ID: " + id);
+            //Debug.Log("Card ID: " + id);
             int amount = Int32.Parse(cardInfo[1]);
-            Debug.Log("Card Amount: " + amount);
+            //Debug.Log("Card Amount: " + amount);
             deckContents.Add(id, amount);
         }
     }
