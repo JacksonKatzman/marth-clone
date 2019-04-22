@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CardInfo;
+using TMPro;
 
 public class PlayHandler : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class PlayHandler : MonoBehaviour
     public List<PlayableCard> playableDeck;
     public DeckManager deckManager;
     public EndTurnButton endTurnButton;
+    int maxMana = 0;
+    int currentMana = 0;
+    public TextMeshPro manaText;
 
     [SerializeField] GameObject PlayableMinionPrefab;
     [SerializeField] GameObject PlayableSpellPrefab;
@@ -59,6 +63,9 @@ public class PlayHandler : MonoBehaviour
     public void StartTurn()
     {
         DrawCard();
+        if(maxMana < 10)
+            maxMana += 1;
+        currentMana = maxMana;
         myHandOrganizer.MakeCardsPlayable(true);
         myPlayingFieldOrganizer.MakeCardsPlayable(true);
         endTurnButton.ChangeSprite(true);
@@ -132,5 +139,20 @@ public class PlayHandler : MonoBehaviour
             DrawCard();
             EndTurn();
         }
+    }
+
+    public void SpendMana(int amount)
+    {
+        currentMana -= amount;
+        UpdateMana();
+    }
+    public int GetCurrentMana()
+    {
+        return currentMana;
+    }
+    void UpdateMana()
+    {
+        manaText.text = "" + currentMana + "/" + maxMana;
+        myHandOrganizer.MakeCardsPlayable(true);
     }
 }

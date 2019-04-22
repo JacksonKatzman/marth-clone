@@ -29,7 +29,9 @@ public class PlayingFieldOrganizer : MonoBehaviour
             return;
         if(numCards == 1)
         {
-            cards[0].transform.localPosition = Vector3.zero;
+            //ADD LERP HERE
+            //cards[0].transform.localPosition = Vector3.zero;
+            cards[0].GetComponent<CardDragger>().BeginLerp(cards[0].transform.position, Vector3.zero);
             return;
         }
         float startPos = 0;

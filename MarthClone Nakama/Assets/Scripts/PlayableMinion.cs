@@ -10,7 +10,7 @@ public class PlayableMinion : PlayableCard
     
     [SerializeField] TextMeshPro attackText, healthText, classText;
 
-    public int attack, health;
+   // public int attack, health;
 
     void Start()
     {
@@ -62,6 +62,11 @@ public class PlayableMinion : PlayableCard
 
     public override void RecieveAttack(PlayableCard other)
     {
+        //DUMB CODE REPLACE ASAP
+        if(other.networkID < 0)
+        {
+            return;
+        }
         if(health > 0)
         {
             health -= ((PlayableMinion)other).attack;

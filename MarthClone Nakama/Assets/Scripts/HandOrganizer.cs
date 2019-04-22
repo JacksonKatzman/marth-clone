@@ -81,11 +81,15 @@ public class HandOrganizer : MonoBehaviour
 
     public void MakeCardsPlayable(bool playable)
     {
+        int availableMana = GameManager.instance.playHandler.GetCurrentMana();
         foreach(PlayableCard card in cards)
         {
-            CardDragger dragger = card.GetComponent<CardDragger>();
-            dragger.dragable = playable;
-            card.particles.SetActive(playable);
+            if (card.manacost <= availableMana)
+            {
+                CardDragger dragger = card.GetComponent<CardDragger>();
+                dragger.dragable = playable;
+                card.particles.SetActive(playable);
+            }
         }
     }
 }

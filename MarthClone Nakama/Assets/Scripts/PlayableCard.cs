@@ -15,8 +15,9 @@ public class PlayableCard : MonoBehaviour
     public SpriteRenderer raritySprite;
     public int networkID;
     public GameObject particles;
-    protected int manacost;
-    
+    public int manacost;
+    public int attack, health;
+
 
     public virtual void SetToBaseCard()
     {

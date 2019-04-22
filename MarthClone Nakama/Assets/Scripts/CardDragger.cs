@@ -101,6 +101,8 @@ public class CardDragger : MonoBehaviour
         transform.SetParent(playHandler.myPlayingFieldOrganizer.gameObject.transform);
         playHandler.myPlayingFieldOrganizer.AttemptToAddCard(card, transform.position);
         card.cardName.GetComponent<SkewTextExample>().RestartSkew();
+        GameManager.instance.playHandler.SpendMana(card.manacost);
+        SetToReady(false);
         card.OnCardPlayed();
     }
 
@@ -133,10 +135,17 @@ public class CardDragger : MonoBehaviour
     void BeginAttack(PlayableCard card)
     {
         //LOTS OF PLACEHOLDER CODE HERE
+        SetToReady(false);
         PlayableMinion me = GetComponent<PlayableMinion>();
         card.RecieveAttack(me);
         me.RecieveAttack(card);
         MatchMessageHandleCombat combat = new MatchMessageHandleCombat(me.networkID, card.networkID);
         MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitAttacked, combat);
+    }
+
+    void SetToReady(bool b)
+    {
+        dragable = b;
+        GetComponent<PlayableCard>().particles.SetActive(b);
     }
 }
