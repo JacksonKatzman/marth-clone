@@ -335,6 +335,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
                 case MatchMessageType.MatchStarted:
                     Debug.Log("Recieved message: Match started!");
                     if(GameManager.instance != null)
+                    { }
                         //GameManager.instance.StartFirstTurn(IsHost);
                     else
                     {
