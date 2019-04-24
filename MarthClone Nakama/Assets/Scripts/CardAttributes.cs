@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DemoGame.Scripts.Utils;
+using DemoGame.Scripts.Session;
+using DemoGame.Scripts.Gameplay.NetworkCommunication.MatchStates;
+using DemoGame.Scripts.Gameplay.NetworkCommunication;
 
 namespace CardInfo
 {
@@ -14,19 +18,22 @@ namespace CardInfo
     [Serializable]
     public enum CardType {Minion, Spell, NUM_TYPES};
     [Serializable]
+    public enum TargetAllowance { Friendly, Enemy, Both, Any, NUM_TYPES };
+    [Serializable]
     public class CardEffect : ScriptableObject
     {
         public bool targeted;
+        //public int modifier;
         private int targetID;
         public int Target
         {
             get { return targetID; }
             set { targetID = value; }
         }
-        public virtual void Trigger()
+        public virtual void Trigger(Card caster, bool broadcast = true, int modifier = 0)
         {
         }
-        public virtual void Trigger(PlayableCard target)
+        public virtual void Trigger(Card caster, PlayableCard target, bool broadcast = true, int modifier = 0)
         {
 
         }
@@ -38,7 +45,7 @@ namespace CardInfo
     {
         //TODO: CARD EFFECTS NEED NETWORKING
         public int amount;
-        public override void Trigger()
+        public override void Trigger(Card caster, bool broadcast = true, int modifier = 0)
         {
             //Draw cards
             for(int a = 0; a < amount; a++)
@@ -46,9 +53,30 @@ namespace CardInfo
                 GameManager.instance.playHandler.DrawCard();
             }
         }
-        public override void Trigger(PlayableCard target)
+        public override void Trigger(Card caster, PlayableCard target, bool broadcast = true, int modifier = 0)
         {
-            base.Trigger(target);
+            
+        }
+    }
+
+    [CreateAssetMenu(fileName = "New Card Effect", menuName = "Card Effect/Change Health")]
+    [Serializable]
+    public class ChangeHealthEffect : CardEffect
+    {
+        //TODO: CARD EFFECTS NEED NETWORKING
+        public int amount;
+        public override void Trigger(Card caster, bool broadcast = true, int modifier = 0)
+        {
+            //Untargeted might change health of all units
+        }
+        public override void Trigger(Card caster, PlayableCard target, bool broadcast = true, int modifier = 0)
+        {
+            target.ChangeHealth(amount + modifier);
+            if (broadcast)
+            {
+                MatchMessageSpellCast cast = new MatchMessageSpellCast(caster.cardID, true, target.networkID, modifier);
+                MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.SpellActivated, cast);
+            }
         }
     }
 }

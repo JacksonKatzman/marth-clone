@@ -330,6 +330,10 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
                 case MatchMessageType.CardDrawn:
                     GameManager.instance.playHandler.OpponentDrewCard();
                     break;
+                case MatchMessageType.SpellActivated:
+                    MatchMessageSpellCast cast = MatchMessageSpellCast.Parse(messageJson);
+                    GameManager.instance.playHandler.OpponentCastSpell(cast.cardID, cast.targeted, cast.targetID, cast.modifier);
+                    break;
                 case MatchMessageType.UnitAttacked:
                     MatchMessageHandleCombat combat = MatchMessageHandleCombat.Parse(messageJson);
                     //OnTurnEnded?.Invoke(matchMessageTurnEnded);

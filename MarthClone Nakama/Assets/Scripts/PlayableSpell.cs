@@ -39,4 +39,8 @@ public class PlayableSpell : PlayableCard
     {
 
     }
+    public override void ChangeHealth(int amount)
+    {
+        
+    }
 }

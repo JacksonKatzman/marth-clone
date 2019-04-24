@@ -67,11 +67,16 @@ public class PlayableMinion : PlayableCard
         {
             return;
         }
-        if(health > 0)
+        ChangeHealth(((PlayableMinion)other).attack);
+    }
+
+    public override void ChangeHealth(int amount)
+    {
+        if (health > 0)
         {
-            health -= ((PlayableMinion)other).attack;
+            health += amount;
             UpdateVisibleCard();
-            if(health <= 0)
+            if (health <= 0)
             {
                 HandleDying();
             }

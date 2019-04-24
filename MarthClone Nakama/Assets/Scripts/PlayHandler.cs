@@ -113,6 +113,23 @@ public class PlayHandler : MonoBehaviour
         }
     }
 
+    public void OpponentCastSpell(int cardID, bool targeted, int targetID = -10, int modifier = 0)
+    {
+        //PlayableCard caster = GameManager.instance.card
+        if(targeted)
+        {
+            PlayableCard target = FindTargetByID(targetID);
+            if(target != null)
+            {
+                GameManager.instance.cardDatabase[cardID].battlecries[0].Trigger(GameManager.instance.cardDatabase[cardID], target, false, modifier);
+            }
+        }
+        else
+        {
+            GameManager.instance.cardDatabase[cardID].battlecries[0].Trigger(GameManager.instance.cardDatabase[cardID], false, modifier);
+        }
+    }
+
     public void HandleIncomingCombat(int theirID, int myID)
     {
         PlayableCard myCard = null;
@@ -185,5 +202,32 @@ public class PlayHandler : MonoBehaviour
     {
         manaText.text = "" + currentMana + "/" + maxMana;
         myHandOrganizer.MakeCardsPlayable(true);
+    }
+
+    PlayableCard FindTargetByID(int id)
+    {
+        foreach(PlayableCard c in myPlayingFieldOrganizer.cards)
+        {
+            if(c.networkID == id)
+            {
+                return c;
+            }
+        }
+        foreach (PlayableCard c in opponentFieldOrganizer.cards)
+        {
+            if (c.networkID == id)
+            {
+                return c;
+            }
+        }
+        if(myHeroCard.networkID == id)
+        {
+            return myHeroCard;
+        }
+        if(enemyHeroCard.networkID == id)
+        {
+            return enemyHeroCard;
+        }
+        return null;
     }
 }

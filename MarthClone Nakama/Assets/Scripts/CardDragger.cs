@@ -186,12 +186,14 @@ public class CardDragger : MonoBehaviour
 
     void CastSpellFromHand(PlayableCard target)
     {
+        Card me = GetComponent<PlayableCard>().baseCard;
         if (target != null)
-            effect.Trigger(target);
+            effect.Trigger(me, target);
         else
-            effect.Trigger();
+            effect.Trigger(me);
         PlayableCard card = GetComponent<PlayableCard>();
         playHandler.myHandOrganizer.RemoveCard(card);
+        //TODO: Network in removing cards from my hand on other side
         Destroy(this.gameObject);
     }
 
@@ -206,6 +208,7 @@ public class CardDragger : MonoBehaviour
         GameManager.instance.playHandler.SpendMana(card.manacost);
         SetToReady(false);
         card.OnCardPlayed();
+        //TODO: Network in removing cards from my hand on other side
     }
 
     public void BeginLerp(Vector3 startPos, Vector3 endPos)

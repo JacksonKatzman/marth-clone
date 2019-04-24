@@ -28,7 +28,7 @@ public class PlayableCard : MonoBehaviour
     {
         foreach(CardEffect effect in baseCard.battlecries)
         {
-            effect.Trigger();
+            effect.Trigger(baseCard);
         }
     }
 
@@ -38,6 +38,11 @@ public class PlayableCard : MonoBehaviour
     }
 
     public virtual void RecieveAttack(PlayableCard other)
+    {
+
+    }
+
+    public virtual void ChangeHealth(int amount)
     {
 
     }

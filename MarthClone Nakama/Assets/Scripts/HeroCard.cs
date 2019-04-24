@@ -24,9 +24,13 @@ public class HeroCard : PlayableCard
 
     public override void RecieveAttack(PlayableCard other)
     {
+        ChangeHealth(((PlayableMinion)other).attack);
+    }
+    public override void ChangeHealth(int amount)
+    {
         if (health > 0)
         {
-            health -= ((PlayableMinion)other).attack;
+            health += amount;
             healthText.text = health.ToString();
             if (health <= 0)
             {
