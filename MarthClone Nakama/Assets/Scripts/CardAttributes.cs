@@ -16,8 +16,19 @@ namespace CardInfo
     [Serializable]
     public class CardEffect : ScriptableObject
     {
+        public bool targeted;
+        private int targetID;
+        public int Target
+        {
+            get { return targetID; }
+            set { targetID = value; }
+        }
         public virtual void Trigger()
         {
+        }
+        public virtual void Trigger(PlayableCard target)
+        {
+
         }
     }
     //Example of possible implementation of card effects
@@ -25,6 +36,7 @@ namespace CardInfo
     [Serializable]
     public class DrawCardsEffect : CardEffect
     {
+        //TODO: CARD EFFECTS NEED NETWORKING
         public int amount;
         public override void Trigger()
         {
@@ -33,6 +45,10 @@ namespace CardInfo
             {
                 GameManager.instance.playHandler.DrawCard();
             }
+        }
+        public override void Trigger(PlayableCard target)
+        {
+            base.Trigger(target);
         }
     }
 }

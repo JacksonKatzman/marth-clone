@@ -38,6 +38,8 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication.MatchStates
 
         TurnEnded,
 
+        CardDrawn,
+
         #endregion
 
         #region UNITS

@@ -4,6 +4,8 @@ using UnityEngine;
 using CardInfo;
 using TMPro;
 using DemoGame.Scripts.Session;
+using DemoGame.Scripts.Gameplay.NetworkCommunication;
+using DemoGame.Scripts.Gameplay.NetworkCommunication.MatchStates;
 
 public class PlayHandler : MonoBehaviour
 {
@@ -20,6 +22,7 @@ public class PlayHandler : MonoBehaviour
 
     [SerializeField] GameObject PlayableMinionPrefab;
     [SerializeField] GameObject PlayableSpellPrefab;
+    [SerializeField] GameObject CardBackPrefab;
 
     void Awake()
     {
@@ -61,6 +64,8 @@ public class PlayHandler : MonoBehaviour
             cardObj.GetComponent<CardDragger>().inHand = true;
             myHandOrganizer.AttemptToAddCard(playableCard);
             deckManager.playableDeck.RemoveAt(0);
+            MatchMessageEndTurn none = new MatchMessageEndTurn("", 0);
+            MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardDrawn, none);
         }
         return false;
     }
@@ -85,7 +90,14 @@ public class PlayHandler : MonoBehaviour
         endTurnButton.ChangeSprite(false);
     }
 
-    public void OpponentPlayedCard(int cardID, int cardType, int absPos, int netID)
+    public void OpponentDrewCard()
+    {
+        GameObject cardBack = Instantiate(CardBackPrefab);
+        PlayableCard card = cardBack.GetComponent<PlayableCard>();
+        opponentHandOrganizer.AttemptToAddCard(card);
+    }
+
+    public void OpponentPlayedMinion(int cardID, int cardType, int absPos, int netID)
     {
         //for later, check for real cards
         if((CardInfo.CardType)cardType == CardInfo.CardType.Minion)
@@ -97,6 +109,7 @@ public class PlayHandler : MonoBehaviour
             minion.baseCard = GameManager.instance.cardDatabase[cardID];
             minion.SetToBaseCard();
             opponentFieldOrganizer.AddCard(minion, absPos);
+            opponentHandOrganizer.RemoveCard(opponentHandOrganizer.cards[0]);
         }
     }
 

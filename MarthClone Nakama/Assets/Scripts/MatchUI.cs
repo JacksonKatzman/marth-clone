@@ -7,6 +7,7 @@ public class MatchUI : MonoBehaviour
 {
     [SerializeField] Camera myCamera;
     [SerializeField] Image redArrow;
+    [SerializeField] Image redTarget;
     // Start is called before the first frame update
     void Awake()
     {
@@ -46,5 +47,19 @@ public class MatchUI : MonoBehaviour
     public void HideRedArrow()
     {
         redArrow.gameObject.SetActive(false);
+    }
+
+    public void SetRedTarget(Vector3 pos)
+    {
+        if(!redTarget.gameObject.activeSelf)
+        {
+            redTarget.gameObject.SetActive(true);
+        }
+        redTarget.GetComponent<RectTransform>().localPosition = pos - myCamera.WorldToScreenPoint(Vector3.zero);
+    }
+
+    public void HideRedTarget()
+    {
+        redTarget.gameObject.SetActive(false);
     }
 }
