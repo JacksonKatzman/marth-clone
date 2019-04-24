@@ -13,7 +13,8 @@ public class CardLoader : MonoBehaviour
     //Card[] sortedCards;
     List<Card> sortedCards;
 
-    [SerializeField] GameObject CardPrefab;
+    [SerializeField] GameObject MinionCardPrefab;
+    [SerializeField] GameObject SpellCardPrefab;
     [SerializeField] GameObject CardViewerPrefab;
 
     void Awake()
@@ -37,7 +38,7 @@ public class CardLoader : MonoBehaviour
         //Debug.Log("Sorted Cards Length: " + sortedCards.Count);
         cardViewers = new List<GameObject>();
 
-        int numViewers = sortedCards.Count / 6;
+        int numViewers = sortedCards.Count / 8;
         if (sortedCards.Count%8 != 0)
         {
             ++numViewers;
@@ -46,14 +47,18 @@ public class CardLoader : MonoBehaviour
         for(int a = 0; a < numViewers; a++)
         {
             GameObject viewer = Instantiate(CardViewerPrefab, mmc.DeckBuilder.transform);
-            for(int b = 0; b < 6; b++)
+            for(int b = 0; b < 8; b++)
             {
-                if ((a * 6) + b < sortedCards.Count)
+                if ((a * 8) + b < sortedCards.Count)
                 {
-                    GameObject card = Instantiate(CardPrefab, viewer.transform);
+                    GameObject card = null;
+                    if(sortedCards[(a * 8) + b].cardType == CardInfo.CardType.Minion)
+                        card = Instantiate(MinionCardPrefab, viewer.transform);
+                    else
+                        card = Instantiate(SpellCardPrefab, viewer.transform);
                     DeckBuilderCard cardScript = card.GetComponent<DeckBuilderCard>();
                     //cardScript.originalCardData = sortedCards[(a * 8) + b];
-                    cardScript.BuildCard(sortedCards[(a * 6) + b], deckBuilder);
+                    cardScript.BuildCard(sortedCards[(a * 8) + b], deckBuilder);
                 }
             }
             cardViewers.Add(viewer);

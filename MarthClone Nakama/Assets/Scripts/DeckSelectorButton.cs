@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DeckSelectorButton : MonoBehaviour {
 
 	public DeckLoader deckLoader;
 	public string deckName;
     public bool forEditor;
-    [SerializeField] Text myText;
+    [SerializeField] TextMeshProUGUI myText;
 	// Use this for initialization
 	void Start () {
 

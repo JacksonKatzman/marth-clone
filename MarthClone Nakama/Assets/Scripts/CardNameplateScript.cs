@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class CardNameplateScript : MonoBehaviour {
 
-	[SerializeField] Text NameplateCost, NameplateName, NameplateNumber;
+	[SerializeField] TextMeshProUGUI NameplateCost, NameplateName, NameplateNumber;
     //public DeckBuilderCard card;
     public Card card;
 	public int amount;

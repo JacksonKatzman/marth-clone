@@ -1371,7 +1371,8 @@ MonoBehaviour:
     type: 3}
   PlayableSpellPrefab: {fileID: 1617733379129067449, guid: f33d4fade2bf73041b7e36a4b5f8578e,
     type: 3}
-  CardBackPrefab: {fileID: 0}
+  CardBackPrefab: {fileID: 4603432097621247380, guid: 0bc691a688f6d6e44b0ecb068e172552,
+    type: 3}
 --- !u!4 &1014331772
 Transform:
   m_ObjectHideFlags: 0

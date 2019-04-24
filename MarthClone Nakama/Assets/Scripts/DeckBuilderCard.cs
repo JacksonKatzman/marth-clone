@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GameSparks.Core;
+using TMPro;
 
 public class DeckBuilderCard : MonoBehaviour {
 
-	public Text AttackText, HealthText, CostText, NameText;
+	public TextMeshProUGUI AttackText, HealthText, CostText, NameText, ClassText, DescriptionText;
     public Image cardImage;
 	public int AttackStat, HealthStat, CostStat;
 	public string NameString, RarityString;
@@ -28,15 +29,20 @@ public class DeckBuilderCard : MonoBehaviour {
         deckBuilder = builder;
 		if(originalCardData != null)
         {
-            AttackStat = originalCardData.attack;
-            HealthStat = originalCardData.health;
             CostStat = originalCardData.manaCost;
             NameString = originalCardData.name;
-            //RARITY HERE
-            AttackText.text = AttackStat.ToString();
-            HealthText.text = HealthStat.ToString();
             CostText.text = CostStat.ToString();
             NameText.text = NameString;
+            DescriptionText.text = originalCardData.description;
+            if (originalCardData.cardType == CardInfo.CardType.Minion)
+            {
+                AttackStat = originalCardData.attack;
+                HealthStat = originalCardData.health;
+                //RARITY HERE
+                AttackText.text = AttackStat.ToString();
+                HealthText.text = HealthStat.ToString();
+                ClassText.text = originalCardData.cardClass.ToString();
+            }
             cardImage.sprite = originalCardData.artwork;
         }
 	}
