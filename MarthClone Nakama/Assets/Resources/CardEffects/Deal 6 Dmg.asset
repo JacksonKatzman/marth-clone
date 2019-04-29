@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Deal 6 Dmg
   m_EditorClassIdentifier: Assembly-CSharp:CardInfo:ChangeHealthEffect
-  targeted: 0
-  amount: 0
+  targeted: 1
+  amount: -6
